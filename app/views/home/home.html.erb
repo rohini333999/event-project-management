@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+   
+
+</head>
+<body>
+    <header>
+      <div class="header-container">
+        <div class="logo-container">
+          <%= image_tag("events-pic.png",{:style => "height:35px;width:35px;margin-right:5px;"}) %>
+          <p class="logo-head"> Event</p>
+        </div>
+        <div class="manage-event">
+                <a href="addevent" class="signup-text">Add Event</a>
+                <a class="signup-text">Events</a>
+         </div>
+         <button id="signup" class="button">
+          </button>
+     </header>
+    
+    <div class="filters-header-container">
+      <button id="filters-button" class="button">Filters</button>
+      <button id="sort-button" class="button">Sort by</button>
+    </div>
+    
+    <h1 class="all-events-heading">All Events</h1>
+    <div id="events-container" class="events-container">
+      
+    </div>
+   
+    <div id="sort-container" >
+        <div class="bg-blur">
+           <div class="filter-popup">
+              <div class="sort-container">
+                <div class="sort-heading">
+                  <h3>Sort by</h3>
+                  <i class="fa-solid fa-xmark cancel-mark" id="cancel-mark"></i>
+                </div>
+                <div>
+                  <input type="radio" id="sort-fee" name="title" value="fee">
+                  <label for="sort-fee"  >Entry Fee</label>
+                </div>
+                <div>
+                   <input type="radio" id="sort-date" name="title" value="date">
+                   <label for="sort-date">Date</label>
+                </div>
+                <button class="button" id="sort-popup-button">Apply</button>
+              </div>
+           </div>
+        </div>
+    </div>
+
+    <div id="filter-container">
+        <div class="bg-blur">
+          <div class="filter-popup">
+            <div class="sort-container">
+                <div class="sort-heading">
+                     <h2>Filters</h2>
+                      <i class="fa-solid fa-xmark cancel-mark" id="cancel-filter"></i>
+                </div>
+                 <h3>Date</h3>
+                <div>
+                  <input type="checkbox" id="today" value="today"/>
+                  <label for="filter-date">Today</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="tomorrow" value="tomorrow"/>
+                  <label for="tomorrow">Tomorrow</label>
+                </div>
+                <div>
+                  <input type="checkbox" id="this-week" value="this-week"/>
+                  <label for="this-week">This Week</label>
+                </div>
+                 
+                <button class="button" id="filter-popup-button">Apply</button>
+
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+
+     <%= javascript_include_tag "home", "data-turbo-track" => "reload" %>
+     <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     
+</head>
+<body>
+    <header>
+      <div class="header-container">
+        <div class="logo-container">
+          <%= image_tag("events-pic.png",{:style => "height:35px;width:35px;margin-right:5px;"}) %>
+          <p class="logo-head"> Event</p>
+        </div>
+        <div class="manage-event">
+                <a href="addevent" class="signup-text">Add Event</a>
+                <a class="signup-text">Events</a>
+         </div>
+         <button id="signup" class="button">
+          </button>
+     </header>
+    <div class="new-event-container">
+        <h1>Create new event</h1>
+        
+        <form class="add-event-container" id="addevent-form">
+            <div class="event-field-container">
+                <label for="event-name">Event Name</label>
+                <input type= "text" id="event-name" class="event-field" name="eventName"/>
+            </div>
+            <div class="event-field-container">
+                <label for="description">Description</label>
+                <textarea id="description" rows="3" cols="25" name="description"></textarea>           
+            </div>
+            <div class="event-field-container">
+                <label for="event-location">Location</label>
+                <input type="text" id="event-location" class="event-field" name="eventLocation"/>
+            </div>
+            <div class="event-field-container">
+                <label for="location-url">Location Image URL</label>
+                <input type="text" id="location-url" class="event-field" name="locationUrl"/>
+            </div>
+            <div class="event-field-container">
+                <label for="fee">Entry Fee</label>
+                <input type="number" id="fee" class="event-field" name="fee"/>
+            </div>
+        
+            <div class="event-field-container">
+                <label for="event-type" class="event-type">Type of event</label>
+                <select id="event-type" class="event-field" name="eventType">
+                    <option value="select">Select</option>
+                    <option value="conference">Conference</option>
+                    <option value="webinar">Webinar</option>
+                    <option value="recuitingEvent">Recuiting Event</option>
+                    <option value="productLaunches">Product Launches</option>
+                    <option value="network">Networking Event</option>
+                    <option value="education">Educational Event</option>
+                    <option value="private">Private Event</option>
+                    <option value="corporate">Corporate Event</option>
+                    <option value="business">Business Event </option>
+                </select>
+            </div>
+            <div class="event-field-container">
+                <label class="size" for="seats">Maximum seats</label>
+                <select id="seats" class="event-field" name="seats"> 
+                    <option value="select"> Select</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                    <option value="400">400</option>
+                    <option value="500">500</option>
+                </select>
+            </div>
+            <div class="event-field-container">
+                <label for="start-time" class="start-time">Starts at</label>
+                <div class="time-field-container">           
+                    <input type="date" id="start-date" class="event-field" name="startDate"/>
+                    <input type="time" class="event-field" id="start-time" name="startTime">
+                </div>
+            </div>
+            <div class="event-field-container">
+                <label for="end-time" class="end-time">Ends at</label>
+                <div class="time-field-container">
+                    <input type="date" id="end-date" class="event-field" name="endDate"/>
+                    <input type="time" class="event-field" id="end-time" name="endTime"/>
+                </div>
+            </div>
+            <h3 id="event-err-msg" class="event-err-msg"></h3>
+            <button class="button" type="submit"> Add Event</button>
+
+            <div class="add-event-success" id="add-event-success">
+                <div class="bg-blur">
+                    <div class="filter-popup">
+                       <div class="add-event-popup-container">
+                            <div class="add-event-popup">
+                                <h3 class="success-msg" id="success-msg">Added event successfully</h3>
+                                <i class="fa-solid fa-xmark cancel-mark" id="add-event-cancel"></i>
+                            </div>
+                            <button class="button home-button" id="home-button">Home</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <%= javascript_include_tag "addevent", "data-turbo-track" => "reload" %>
+    <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
+</body>
+</html>

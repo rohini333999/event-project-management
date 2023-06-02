@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+   
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo-container">
+          <%= image_tag("events-pic.png",{:style => "height:45px;width:45px;margin-right:10px;"}) %>
+          <h2> Event</h2>
+        </div>
+    </header>
+      <div class="bg-create-account">
+        <div class="create-account-container">
+          <h1>Create Account</h1>
+          <form class="form-container" id="account-form" novalidate>
+            <div class="input-field-container">
+              <label for="fullname" class="input-label"
+                >Enter Your Fullname</label
+              >
+              <input
+                type="text"
+                id="fullname"
+                required
+                class="input-field"
+                name="fullname"
+                placeholder="A Example"
+                onkeyup = "checkUsername(event)"
+                onblur = "blurname(event)"
+              />
+              <p class="error-msg" id="name-error"></p>
+            </div>
+            <div class="input-field-container">
+              <label for="email">Enter Email</label>
+              <input
+                type="email"
+                id="email"
+                required
+                class="input-field"
+                name="email"
+                placeholder="example@gmail.com"
+                onkeyup="checkEmail(event)"
+                onblur = "blurEmail(event)"
+              />
+              <p class="error-msg" id="email-error"></p>
+            </div>
+            <div class="input-field-container">
+              <label for="password">Enter Password</label>
+              <input
+                type="password"
+                id="password"
+                required
+                placeholder="Example@123"
+                class="input-field"
+                name="password"
+                onkeyup = "checkPassword(event)"
+                onblur = "blurPassword(event)"
+              />
+              <p class="error-msg" id="password-error"></p>
+            </div>
+            <div class="input-field-container">
+              <label for="confirm-password">Confirm Password</label>
+              <input
+                type="password"
+                id="confirm-password"
+                required
+                placeholder="Example@123"
+                class="input-field"
+                name="confirmPassword"
+                onkeyup = "checkPassword(event)"
+                onblur = "blurConfirmPassword(event)"
+              />
+              <p class="error-msg" id="confirm-password-error"></p>
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+          </form>
+          <p>Have a account, Please <a href="login">Login</a> here</p>
+          <p class="success-msg" id="success-msg"></p>
+        </div>
+      </div>
+    </div>
+    <%= javascript_include_tag "application", "data-turbo-track" => "reload" %>
+  </body>
+</html>
