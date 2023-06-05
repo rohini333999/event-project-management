@@ -1,9 +1,4 @@
 const accountForm = document.getElementById("account-form");
-const fullname = document.getElementById("fullname");
-
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const confirmPassword = document.getElementById("confirm-password");
 
 const nameError = document.getElementById("name-error");
 const emailError = document.getElementById("email-error");
@@ -49,53 +44,46 @@ function checkEmail(event) {
   }
 }
 
+let passwordValue;
+let confirmPasswordValue;
+
 function checkPassword(event) {
-  let passwordValue;
-  let confirmPasswordValue;
-  if (event.target.name === "password") {
-    let passwordInput = event.target.value;
-    if (passwordInput === "") {
-      passwordError.textContent = "Required*";
+  console.log("targetname", event.target.name);
 
-      passwordValid = false;
-    } else if (String(passwordInput.length) < 6) {
-      passwordError.textContent = "Password must have min 6 characters";
+  let passwordInput = event.target.value;
+  if (passwordInput === "") {
+    passwordError.textContent = "Required*";
 
-      passwordValid = false;
-    } else {
-      passwordValue = passwordInput;
-      passwordError.textContent = "";
-      passwordValid = true;
-    }
+    passwordValid = false;
+  } else if (String(passwordInput.length) < 6) {
+    passwordError.textContent = "Password must have min 6 characters";
+
+    passwordValid = false;
+  } else {
+    passwordValue = passwordInput;
+    passwordError.textContent = "";
+    passwordValid = true;
   }
-  if ((event.target.name = "confirmPassword")) {
-    let confirmPasswordInput = event.target.value;
-    if (confirmPasswordInput === "") {
-      confirmPasswordError.textContent = "Required*";
+}
+function checkConfirmPassword(event) {
+  let confirmPasswordInput = event.target.value;
+  if (confirmPasswordInput === "") {
+    confirmPasswordError.textContent = "Required*";
 
-      confirmPasswordValid = false;
-    } else if (confirmPasswordInput !== passwordValue) {
-      confirmPasswordError.textContent = "Password must be same";
-
-      confirmPasswordValid = false;
-    } else {
-      confirmPasswordValue = confirmPasswordInput;
-      confirmPasswordError.textContent = "";
-
-      confirmPasswordValid = true;
-    }
-  }
-  if (passwordValue === confirmPasswordValue) {
+    confirmPasswordValid = false;
+  } else if (confirmPasswordInput !== passwordValue) {
     confirmPasswordError.textContent = "Password must be same";
 
     confirmPasswordValid = false;
+  } else {
+    confirmPasswordValue = confirmPasswordInput;
+    confirmPasswordError.textContent = "";
+
+    confirmPasswordValid = true;
   }
 }
 
-function checkSamePassword(event) {}
-
 function blurname(event) {
-  console.log("blurna,e");
   if (event.target.value === "") {
     nameError.textContent = "Required*";
   }
@@ -119,24 +107,93 @@ function blurConfirmPassword(event) {
   }
 }
 
-accountForm.addEventListener("submit", (event) => {
+accountForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   allElements.forEach((input) => {
-    console.log("value", input.value);
-    console.log("name", input.name);
+    if (input.value === "") {
+      if (input.name === "fullname") {
+        nameError.textContent = "Required*";
+
+        nameValid = false;
+      } else if (input.name === "email") {
+        emailError.textContent = "Required*";
+
+        emailValid = false;
+      } else if (input.name === "password") {
+        passwordError.textContent = "Required*";
+
+        passwordValid = false;
+      } else if (input.name === "confirmPassword") {
+        confirmPasswordError.textContent = "Required*";
+
+        confirmPasswordValid = false;
+      }
+    }
   });
 
-  if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
-    const usersList = [];
+  if (passwordValue !== confirmPasswordValue) {
+    confirmPasswordError.textContent = "Password must be same";
 
-    usersList.push({
-      name: fullname.value,
-      email: email.value,
-      password: password.value,
+    confirmPasswordValid = false;
+  } else if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
+    const usersList = {
+      fullname: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+
+    allElements.forEach((input) => {
+      if (input.name === "fullname") {
+        usersList.fullname = input.value;
+      } else if (input.name === "email") {
+        usersList.email = input.value;
+      } else if (input.name === "password") {
+        usersList.password = input.value;
+      } else if (input.name === "confirmPassword") {
+        usersList.confirmPassword = input.value;
+      }
     });
-    console.log("useslist", JSON.stringify(usersList));
-    localStorage.setItem("users", JSON.stringify(usersList));
-    successMsg.textContent = "User registered successfully";
+
+    console.log("userslist", usersList);
+    let url = "http://localhost:3000/api/v1/users";
+
+    let options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(usersList),
+    };
+
+    try {
+      const response = await fetch(url);
+      const allUsers = await response.json();
+
+      console.log("allusers", allUsers);
+      const existMail = allUsers.filter((each) => {
+        return each.email === usersList.email;
+      });
+      console.log("exits", existMail);
+
+      if (!response.ok) {
+        throw new Error("Error:", response.status);
+      } else if (existMail.length !== 0) {
+        successMsg.textContent = "User already exists, Login to continue";
+        accountForm.reset();
+      } else {
+        const postResponse = await fetch(url, options);
+        const result = await postResponse.json();
+        successMsg.textContent = "User registered successfully";
+        console.log(result);
+
+        if (!response.ok) {
+          throw new Error("error:" + response.status);
+        }
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
   }
 });
