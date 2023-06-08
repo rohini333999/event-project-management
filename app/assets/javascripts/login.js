@@ -2,7 +2,7 @@ const loginForm = document.getElementById("account-form");
 
 const emailError = document.getElementById("email-error");
 const passwordError = document.getElementById("password-error");
-const successMsg = document.getElementById("success-msg");
+const loginSuccessMsg = document.getElementById("login-success-msg");
 
 const goHome = document.getElementById("go-home");
 const email = document.getElementById("email");
@@ -12,49 +12,71 @@ let isEmail = true;
 let isPassword = true;
 
 function checkEmail(event) {
-  let getEmail = JSON.parse(localStorage.getItem("users"));
-
-  if (getEmail[0].email !== event.target.value) {
+  if (event.target.value === "") {
+    emailError.textContent = "Required*";
     isEmail = false;
-    emailError.textContent = "Email not registered! Please signup";
   } else {
     emailError.textContent = "";
-    isEmail = true;
+    isEmail = false;
   }
-  return isEmail;
 }
 
-function checkPassword(value1, value2) {
-  let getpassword = JSON.parse(localStorage.getItem("users"));
-  console.log(getpassword[0].password, value2);
-  if (getpassword[0].email === value1 && getpassword[0].password !== value2) {
+function checkPassword(event) {
+  if (event.target.value === "") {
+    passwordError.textContent = "Required*";
     isPassword = false;
-    passwordError.textContent = "Password is incorrect";
   } else {
     passwordError.textContent = "";
     isPassword = true;
   }
-  return isPassword;
 }
 
-loginForm.addEventListener("submit", (event) => {
+loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (email.value === "") {
     emailError.textContent = "Required*";
+
+    isEmail = false;
   } else if (password.value === "") {
     passwordError.textContent = "Required*";
-  }
 
-  checkPassword(email.value, password.value);
+    isPassword = false;
+  } else {
+    emailError.textContent = "";
+    passwordError.textContent = "";
+
+    isEmail = true;
+    isPassword = true;
+  }
 
   if (isEmail && isPassword) {
     console.log("valid");
-    let loginUser = { email: email.value, password: password.value };
 
-    localStorage.setItem("loginUser", JSON.stringify(loginUser));
-    successMsg.textContent = "Login successfully";
-    goHome.textContent = "Go to home page";
-    loginForm.reset();
+    let url = "http://localhost:3000/api/v1/users";
+    try {
+      const response = await fetch(url);
+      const allUsers = await response.json();
+
+      console.log("all users", allUsers);
+
+      const validUser = allUsers.find((each) => {
+        return each.email === email.value && each.password === password.value;
+      });
+      if (validUser !== undefined) {
+        loginSuccessMsg.textContent = "Login successfully";
+        goHome.textContent = "Go to home page";
+
+        loginForm.reset();
+        console.log("validuser", validUser);
+        localStorage.setItem("loginUser", JSON.stringify(validUser));
+      } else {
+        loginSuccessMsg.textContent = "Invalid Details";
+
+        goHome.textContent = "";
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   }
 });

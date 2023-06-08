@@ -12,6 +12,7 @@ console.log("input", allElements);
 
 let nameValid = true;
 let emailValid = true;
+
 let passwordValid = true;
 let confirmPasswordValid = true;
 
@@ -169,6 +170,7 @@ accountForm.addEventListener("submit", async (event) => {
 
     try {
       const response = await fetch(url);
+      console.log("postresponse", response);
       const allUsers = await response.json();
 
       console.log("allusers", allUsers);

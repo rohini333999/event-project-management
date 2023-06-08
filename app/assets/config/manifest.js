@@ -6,3 +6,5 @@
 //= link home.js
 //= link addevent.js
 //= link login.js
+//= link events.js
+//= link myevents.js

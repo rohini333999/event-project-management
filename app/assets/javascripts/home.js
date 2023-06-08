@@ -21,96 +21,102 @@ const today = document.getElementById("today");
 const tomorrow = document.getElementById("tomorrow");
 const thisWeek = document.getElementById("this-week");
 
-const eventsData = [
-  {
-    id: 1,
-    event_name: "Tech Conference 2023",
-    date: "2023-06-01",
-    time: "09:00 AM - 06:00 PM",
-    location: "Convention Center, City A",
-    description:
-      "A conference dedicated to showcasing the latest advancements in technology.",
-    entry_fee: 50,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRr3hkSH2Hg3bOUlljcb6F8QAkTg_WkwR4Cy_4-Cl7fqxEqWH2P-8PXyMD5LGJpYRfFiM&usqp=CAU",
-  },
-  {
-    id: 2,
-    event_name: "Music Festival",
-    date: "2023-06-02",
-    time: "02:00 PM - 11:00 PM",
-    location: "Outdoor Park, City B",
-    description:
-      "A lively music festival featuring various genres and talented artists.",
-    entry_fee: 30,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuMvrJ0Tg07t78JXz8HtQFDDGSCU9truK9ZX582VLy&s",
-  },
-  {
-    id: 3,
-    event_name: "Business Workshop",
-    date: "2023-06-01",
-    time: "10:00 AM - 04:00 PM",
-    location: "Business Center, City C",
-    description:
-      "A workshop focused on improving business strategies and entrepreneurship skills.",
-    entry_fee: 20,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5vUEadFvlH5Pz1W4S841lEdN15gboCyJEcw&usqp=CAU",
-  },
-  {
-    id: 4,
-    event_name: "Charity Gala Dinner",
-    date: "2023-06-03",
-    time: "06:30 PM - 11:00 PM",
-    location: "Grand Hotel, City D",
-    description:
-      "An elegant evening of dining and entertainment to raise funds for a charitable cause.",
-    entry_fee: 100,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwdvlw1F-Om6WBorzcBTLzlKLuJVfWdlvtmQ&usqp=CAU",
-  },
-  {
-    id: 5,
-    event_name: "Art Exhibition",
-    date: "2023-07-10",
-    time: "10:00 AM - 06:00 PM",
-    location: "Art Gallery, City E",
-    description:
-      "A curated art exhibition showcasing diverse artistic expressions.",
-    entry_fee: 10,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Pn0pMg3Nd5SMitk3uF_tW6yVFlg53ASMHA&usqp=CAU",
-  },
-  {
-    id: 6,
-    event_name: "Sports Tournament",
-    date: "2023-08-05",
-    time: "08:00 AM - 05:00 PM",
-    location: "Sports Complex, City F",
-    description:
-      "A competitive sports tournament featuring various sports disciplines.",
-    entry_fee: 15,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj1Nf2wfvCG0xWdyKupXmzIwjpJRd-zFyMbQ&usqp=CAU",
-  },
-  {
-    id: 7,
-    event_name: "Food Festival",
-    date: "2023-09-17",
-    time: "12:00 PM - 09:00 PM",
-    location: "Downtown Square, City G",
-    description:
-      "A gastronomic extravaganza showcasing a wide array of culinary delights.",
-    entry_fee: 25,
-    image_url:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO5DnMi0uw4XEfJkCmmETwzhvmH97LulRW0A&usqp=CAU",
-  },
-];
+const myevents = document.getElementById("myevents");
+
+// const eventsData = [
+//   {
+//     id: 1,
+//     event_name: "Tech Conference 2023",
+//     date: "2023-06-01",
+//     time: "09:00 AM - 06:00 PM",
+//     location: "Convention Center, City A",
+//     description:
+//       "A conference dedicated to showcasing the latest advancements in technology.",
+//     entry_fee: 50,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRr3hkSH2Hg3bOUlljcb6F8QAkTg_WkwR4Cy_4-Cl7fqxEqWH2P-8PXyMD5LGJpYRfFiM&usqp=CAU",
+//   },
+//   {
+//     id: 2,
+//     event_name: "Music Festival",
+//     date: "2023-06-02",
+//     time: "02:00 PM - 11:00 PM",
+//     location: "Outdoor Park, City B",
+//     description:
+//       "A lively music festival featuring various genres and talented artists.",
+//     entry_fee: 30,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuMvrJ0Tg07t78JXz8HtQFDDGSCU9truK9ZX582VLy&s",
+//   },
+//   {
+//     id: 3,
+//     event_name: "Business Workshop",
+//     date: "2023-06-01",
+//     time: "10:00 AM - 04:00 PM",
+//     location: "Business Center, City C",
+//     description:
+//       "A workshop focused on improving business strategies and entrepreneurship skills.",
+//     entry_fee: 20,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5vUEadFvlH5Pz1W4S841lEdN15gboCyJEcw&usqp=CAU",
+//   },
+//   {
+//     id: 4,
+//     event_name: "Charity Gala Dinner",
+//     date: "2023-06-03",
+//     time: "06:30 PM - 11:00 PM",
+//     location: "Grand Hotel, City D",
+//     description:
+//       "An elegant evening of dining and entertainment to raise funds for a charitable cause.",
+//     entry_fee: 100,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwdvlw1F-Om6WBorzcBTLzlKLuJVfWdlvtmQ&usqp=CAU",
+//   },
+//   {
+//     id: 5,
+//     event_name: "Art Exhibition",
+//     date: "2023-07-10",
+//     time: "10:00 AM - 06:00 PM",
+//     location: "Art Exhibition",
+//     description:
+//       "A curated art exhibition showcasing diverse artistic expressions.",
+//     entry_fee: 10,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7Pn0pMg3Nd5SMitk3uF_tW6yVFlg53ASMHA&usqp=CAU",
+//   },
+//   {
+//     id: 6,
+//     event_name: "Sports Tournament",
+//     date: "2023-08-05",
+//     time: "08:00 AM - 05:00 PM",
+//     location: "Sports Complex, City F",
+//     description:
+//       "A competitive sports tournament featuring various sports disciplines.",
+//     entry_fee: 15,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj1Nf2wfvCG0xWdyKupXmzIwjpJRd-zFyMbQ&usqp=CAU",
+//   },
+//   {
+//     id: 7,
+//     event_name: "Food Festival",
+//     date: "2023-09-17",
+//     time: "12:00 PM - 09:00 PM",
+//     location: "Downtown Square, City G",
+//     description:
+//       "A gastronomic extravaganza showcasing a wide array of culinary delights.",
+//     entry_fee: 25,
+//     image_url:
+//       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO5DnMi0uw4XEfJkCmmETwzhvmH97LulRW0A&usqp=CAU",
+//   },
+// ];
 
 localStorage.getItem("loginUser")
   ? (signup.textContent = "Logout")
   : (signup.textContent = "Login");
+
+localStorage.getItem("loginUser")
+  ? (myevents.textContent = "My Events")
+  : (myevents.textContent = "");
 
 signup.addEventListener("click", () => {
   console.log("signup", signup.textContent);
@@ -123,22 +129,23 @@ signup.addEventListener("click", () => {
     window.location.href = "/login";
   }
 });
+
 function renderEvents(data) {
-  console.log("in render data");
   eventsContainer.innerHTML = "";
   let allEvents = data.map((each) => {
     const eventCardContainer = document.createElement("div");
 
     eventCardContainer.classList.add("event-card-container");
+
     eventCardContainer.innerHTML += `
-  <img src=${each.image_url} class="event-image"/>
-  <div class="event-header" id="event-header">
-      <h2 class="event-name">${each.event_name}</h2>
-      <p>${each.location}</p>
-      <p id="event-fee">Entry Fee $${each.entry_fee}</p> 
-      <p>Event Date ${each.date}</p>
-      <a href= "events/${each.id}">View Details</a>   
-  </div>
+      <img src=${each.location_url} class="event-image"/>
+      <div class="event-header" id="event-header">
+          <h2 class="event-name">${each.event_name}</h2>
+          <p>${each.location}</p>
+          <p id="event-fee">Entry Fee $${each.entry_fee}</p> 
+          <p>Event Date ${each.start_date}</p>
+          <a href= "events/${each.id}">View Details</a>   
+      </div>
   `;
 
     eventCardContainer.addEventListener("click", () => {});
@@ -147,8 +154,29 @@ function renderEvents(data) {
     return eventCardContainer;
   });
 }
+let eventsData;
 
-let renderEventsData = eventsData;
+async function getEvents() {
+  let url = "http://localhost:3000/api/v1/events";
+  try {
+    const response = await fetch(url);
+    const eventsResult = await response.json();
+
+    if (!response.ok) {
+      throw new Error("Error:", response.status);
+    } else {
+      console.log("eventsResult", eventsResult);
+      eventsData = eventsResult;
+
+      // renderEvents(eventsResult);
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+}
+getEvents();
+
+// let renderEventsData = eventsData;
 sortContainer.classList.add("no-display");
 filterContainer.classList.add("no-display");
 
@@ -279,4 +307,3 @@ filterPopupButton.addEventListener("click", () => {
   }
 });
 console.count("outside");
-renderEvents(renderEventsData);

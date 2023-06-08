@@ -1,23 +1,29 @@
+
+
 class Api::V1::UsersController < ApplicationController
   def index
     allUsers = User.all
     render json: allUsers, status: 200
-
+    
   end
 
   def show
+      @request_params = params
   end
+  
 
   def create
-    user = User.new(
+    
+    newuser = User.new(
       fullname: user_params[:fullname],
       email: user_params[:email],
       password: user_params[:password],
       confirmPassword:user_params[:confirmPassword]
     )
-
-    if user.save
-      render json: user, status: 200
+    
+    if newuser.save
+      render json:params
+      # render json: user, status: 200
     else
       render json: {
         error: "Error creating"
