@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+   
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <%= image_tag("events-pic.png",{:style => "height:35px;width:35px;margin-right:5px;" }) %>
+                <p class="logo-head"> Event</p>
+            </div>
+            <div class="manage-event">
+                <a class="signup-text" href="/">Events</a>
+            </div>
+            <button id="signup" class="button"></button>
+        </div>
+    </header>
+    <div id="loader">
+        Loading...
+    </div>
+    <div id="page-error" class="page-error">
+        
+    </div>
+    
+    <div id="event-details-container">
+      
+             <div class="each-event">
+                    
+                <div class="single-event-image-div">
+                    <h2><%= @singleEvent.event_name %></h2>
+                    <img src=<%= @singleEvent.location_url %> class="single-event-image"/>
+                </div>
+                  <div class="event-details-container">
+                    <div>
+                        <p>Description</p>
+                        <p class="description"><%= @singleEvent.description %></p>
+                    </div>
+                    <div>
+                        <p>Event Category</p>
+                        <p class="category"><%= @singleEvent.category %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-calendar fa-lg"></i>
+                        <p><%= @singleEvent.start_date %> to <%= @singleEvent.end_date %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                        <p><%= @singleEvent.location %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-wallet fa-lg"></i>
+                        <p><%= @singleEvent.entry_fee %></p>
+                    </div>
+                    <button class="button register" onClick="clickRegister" name="register">Register</button>
+                    <div></div>
+                </div>
+             </div>
+
+       
+    </div>
+
+      <%= javascript_include_tag "events", "data-turbo-track" => "reload" %>
+    <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
+</body>
+</html>

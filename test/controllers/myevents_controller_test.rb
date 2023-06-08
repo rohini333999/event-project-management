@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FrontendControllerTest < ActionDispatch::IntegrationTest
+class MyeventsControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

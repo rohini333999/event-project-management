@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_05_081150) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_080827) do
+  create_table "events", force: :cascade do |t|
+    t.string "event_name"
+    t.string "description"
+    t.string "location"
+    t.string "location_url"
+    t.integer "entry_fee"
+    t.string "category"
+    t.integer "seats"
+    t.date "start_date"
+    t.time "start_time"
+    t.date "end_date"
+    t.time "end_time"
+    t.integer "users_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["users_id"], name: "index_events_on_users_id"
+  end
+
+  create_table "registers", force: :cascade do |t|
+    t.integer "users_id", null: false
+    t.integer "events_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["events_id"], name: "index_registers_on_events_id"
+    t.index ["users_id"], name: "index_registers_on_users_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "fullname"
     t.string "email"
@@ -20,4 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_081150) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "events", "users", column: "users_id"
+  add_foreign_key "registers", "events", column: "events_id"
+  add_foreign_key "registers", "users", column: "users_id"
 end

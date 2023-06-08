@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
+   
+ </head>
+<body>
+    <div>
+       <h1>My Events</h1>
+         <div id="myevents-container" class="myevents-container">
+         <%= @events.each do |each| %>
+            <div class="myevent-card-container">
+                  <img src=<%= each.location_url %> class="myevent-image"/>
+                <div class="event-header" id="event-header">
+                        <h2 class="event-name"><%= each.event_name %></h2>
+                    <div>
+                        <p>Event Category</p>
+                        <p class="category"><% each.category %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-calendar fa-lg"></i>
+                        <p><%= each.start_date %> to <%= each.end_date %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                        <p><%= each.location %></p>
+                    </div>
+                    <div class="icon-container">
+                        <i class="fa-solid fa-wallet fa-lg"></i>
+                        <p>$<%= each.entry_fee %></p>
+                    </div>
+                </div>
+            </div>
+         <% end %>
+        </div>
+    </div>
+     <%= javascript_include_tag "myevents", "data-turbo-track" => "reload" %>
+     <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
+</body>
+</html>

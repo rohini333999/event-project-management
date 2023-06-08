@@ -18,11 +18,10 @@
           <p class="logo-head"> Event</p>
         </div>
         <div class="manage-event">
-                <a href="addevent" class="signup-text">Add Event</a>
-                <a class="signup-text">Events</a>
-         </div>
-         <button id="signup" class="button">
-          </button>
+            <a href="addevent" class="signup-text">Add Event</a>
+            <a href="myevents" class="signup-text" id="myevents"></a>
+        </div>
+        <button id="signup" class="button"></button>
      </header>
     
     <div class="filters-header-container">
@@ -31,8 +30,20 @@
     </div>
     
     <h1 class="all-events-heading">All Events</h1>
+    
     <div id="events-container" class="events-container">
-      
+      <%= @allEvents.each do |each| %>
+        <div class="event-card-container">
+            <img src=<%= each.location_url %> class="event-image"/>
+          <div class="event-header" id="event-header">
+              <h2 class="event-name"><%= each.event_name %></h2>
+              <p><%= each.location %></p>
+              <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
+              <p>Event Date <%= each.start_date %></p>
+              <a href= "events/<%= each.id %>">View Details</a>   
+          </div>
+        </div>
+      <% end %>       
     </div>
    
     <div id="sort-container" >
@@ -87,7 +98,7 @@
         </div>
     </div>
 
-     <%= javascript_include_tag "home", "data-turbo-track" => "reload" %>
+     <%= javascript_include_tag "home", "data-turbo-track" => "reload" %> 
      <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
 </body>
 </html>
