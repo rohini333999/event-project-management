@@ -22,6 +22,7 @@ const tomorrow = document.getElementById("tomorrow");
 const thisWeek = document.getElementById("this-week");
 
 const myevents = document.getElementById("myevents");
+const removeContainer = document.getElementById("remove-container");
 
 // const eventsData = [
 //   {
@@ -110,6 +111,7 @@ const myevents = document.getElementById("myevents");
 //   },
 // ];
 
+document.getElementById("cookie-value");
 localStorage.getItem("loginUser")
   ? (signup.textContent = "Logout")
   : (signup.textContent = "Login");
@@ -130,53 +132,40 @@ signup.addEventListener("click", () => {
   }
 });
 
-function renderEvents(data) {
-  eventsContainer.innerHTML = "";
-  let allEvents = data.map((each) => {
-    const eventCardContainer = document.createElement("div");
+removeContainer.classList.add("no-display");
 
-    eventCardContainer.classList.add("event-card-container");
-
-    eventCardContainer.innerHTML += `
-      <img src=${each.location_url} class="event-image"/>
-      <div class="event-header" id="event-header">
-          <h2 class="event-name">${each.event_name}</h2>
-          <p>${each.location}</p>
-          <p id="event-fee">Entry Fee $${each.entry_fee}</p> 
-          <p>Event Date ${each.start_date}</p>
-          <a href= "events/${each.id}">View Details</a>   
-      </div>
-  `;
-
-    eventCardContainer.addEventListener("click", () => {});
-
-    eventsContainer.appendChild(eventCardContainer);
-    return eventCardContainer;
-  });
+let removeId;
+function removeEvent(event, id) {
+  removeContainer.classList.remove("no-display");
+  console.log("id", id);
+  removeId = id;
 }
-let eventsData;
 
-async function getEvents() {
-  let url = "http://localhost:3000/api/v1/events";
+async function removeYes(event) {
+  let url = `http://localhost:3000/api/v1/events/${removeId}`;
+  let options = {
+    method: "DELETE",
+  };
+
   try {
-    const response = await fetch(url);
-    const eventsResult = await response.json();
+    const response = await fetch(url, options);
+    // const result = await response.json();
 
-    if (!response.ok) {
-      throw new Error("Error:", response.status);
-    } else {
-      console.log("eventsResult", eventsResult);
-      eventsData = eventsResult;
+    console.log("result", response);
 
-      // renderEvents(eventsResult);
+    if (response.ok) {
+      removeContainer.classList.add("no-display");
+      location.reload();
     }
   } catch (error) {
     console.log("error", error);
   }
 }
-getEvents();
 
-// let renderEventsData = eventsData;
+function removeNo(event) {
+  removeContainer.classList.add("no-display");
+}
+
 sortContainer.classList.add("no-display");
 filterContainer.classList.add("no-display");
 
@@ -196,114 +185,97 @@ cancelFilter.addEventListener("click", () => {
   filterContainer.classList.add("no-display");
 });
 
-sortPopupButton.addEventListener("click", () => {
-  let sortedData = eventsData;
+function cancelSortActive(event) {
+  console.log("cancel click", event.target.parentElement);
+  let currentUrl = new URL(window.location.href);
+  let searchParams = currentUrl.searchParams;
+  event.target.parentElement.textContent = "";
 
-  if (sortFee.checked) {
-    sortedData.sort((value1, value2) => {
-      const fee1 = value1.entry_fee;
-      const fee2 = value2.entry_fee;
-      if (fee1 < fee2) {
-        return 1;
-      } else if (fee1 > fee2) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
+  searchParams.delete("sort");
+  currentUrl.search = searchParams.toString();
 
-    renderEvents(sortedData);
-  } else if (sortDate.checked) {
-    let sortedData = eventsData;
-    sortedData.sort((value1, value2) => {
-      const date1 = new Date(value1.date);
-      const date2 = new Date(value2.date);
-      if (date1 > date2) {
-        return 1;
-      } else if (date1 < date2) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
+  window.location.href = currentUrl.toString();
+}
+
+function cancelFilterActive(event) {
+  console.log(event.target.parentElement.textContent);
+  let filterValue = event.target.parentElement.textContent;
+
+  let currentUrl = new URL(window.location.href);
+  let searchParams = currentUrl.searchParams;
+
+  if (searchParams.get("filter") === "today|tomorrow") {
+    if (filterValue.trim() === "Today") {
+      filterValue = "";
+
+      searchParams.set("filter", "tomorrow");
+      currentUrl.search = searchParams.toString();
+
+      window.location.href = currentUrl.toString();
+    }
+    if (filterValue.trim() === "Tomorrow") {
+      filterValue = "";
+
+      searchParams.set("filter", "today");
+      currentUrl.search = searchParams.toString();
+
+      window.location.href = currentUrl.toString();
+    }
+  } else {
+    searchParams.delete("filter");
+    currentUrl.search = searchParams.toString();
+
+    window.location.href = currentUrl.toString();
   }
+}
 
-  renderEvents(renderEventsData);
-  sortContainer.classList.add("no-display");
+sortPopupButton.addEventListener("click", () => {
+  if (sortFee.checked) {
+    let currentUrl = new URL(window.location.href);
+    let searchParams = currentUrl.searchParams;
+
+    searchParams.set("sort", "entry-fee");
+    currentUrl.search = searchParams.toString();
+
+    window.location.href = currentUrl.toString();
+  } else if (sortDate.checked) {
+    let currentUrl = new URL(window.location.href);
+    let searchParams = currentUrl.searchParams;
+    console.log(searchParams);
+
+    searchParams.set("sort", "date");
+
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
+  }
 });
-
-function thisWeekEvents() {
-  const currentDate = new Date();
-  const currentWeekStart = new Date(currentDate);
-
-  currentWeekStart.setHours(0, 0, 0, 0);
-  currentWeekStart.setDate(currentDate.getDate() - currentDate.getDay());
-
-  const currentWeekEnd = new Date(currentWeekStart);
-  currentWeekEnd.setDate(currentWeekStart.getDate() + 7);
-
-  const eventsThisWeek = eventsData.filter((each) => {
-    const eventDate = new Date(each.date);
-
-    return eventDate >= currentWeekStart && eventDate < currentWeekEnd;
-  });
-  return eventsThisWeek;
-}
-
-function todayEvents() {
-  const currentDate = new Date();
-  const filteredEvents = eventsData.filter((each) => {
-    const eventDate = new Date(each.date);
-
-    return (
-      eventDate.getDate() === currentDate.getDate() &&
-      eventDate.getMonth() === currentDate.getMonth() &&
-      eventDate.getFullYear() === currentDate.getFullYear()
-    );
-  });
-  return filteredEvents;
-}
-
-function tomorrowEvents() {
-  const currentDate = new Date();
-  const nextDay = new Date(currentDate);
-
-  nextDay.setDate(currentDate.getDate() + 1);
-
-  const filteredEventsTomorrow = eventsData.filter((each) => {
-    const eventDate = new Date(each.date);
-
-    return (
-      eventDate.getDate() === nextDay.getDate() &&
-      eventDate.getMonth() === nextDay.getMonth() &&
-      eventDate.getFullYear() === nextDay.getFullYear()
-    );
-  });
-  return filteredEventsTomorrow;
-}
 
 filterPopupButton.addEventListener("click", () => {
   filterContainer.classList.add("no-display");
 
+  let currentUrl = new URL(window.location.href);
+  let searchParams = currentUrl.searchParams;
+
   if (thisWeek.checked) {
-    let eventsThisWeek = thisWeekEvents();
+    searchParams.set("filter", "this-week");
 
-    renderEvents(eventsThisWeek);
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
   } else if (today.checked && tomorrow.checked) {
-    let filteredEvents = todayEvents();
-    let filteredEventsTomorrow = tomorrowEvents();
+    searchParams.set("filter", "today|tomorrow");
 
-    renderEvents([...filteredEvents, ...filteredEventsTomorrow]);
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
   } else if (today.checked) {
-    let filteredEvents = todayEvents();
+    searchParams.set("filter", "today");
 
-    renderEvents(filteredEvents);
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
   } else if (tomorrow.checked) {
-    let filteredEventsTomorrow = tomorrowEvents();
-    renderEvents(filteredEventsTomorrow);
-  } else {
-    console.log("ff");
-    renderEvents(renderEventsData);
+    searchParams.set("filter", "tomorrow");
+
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
   }
 });
 console.count("outside");

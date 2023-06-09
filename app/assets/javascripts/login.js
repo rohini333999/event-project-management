@@ -68,7 +68,11 @@ loginForm.addEventListener("submit", async (event) => {
         goHome.textContent = "Go to home page";
 
         loginForm.reset();
-        console.log("validuser", validUser);
+
+        document.cookie = `user_id=${JSON.stringify(validUser.id)}`;
+
+        // document.getElementById("cookie-value").textContent = "";
+        console.log("coockie", document.cookie);
         localStorage.setItem("loginUser", JSON.stringify(validUser));
       } else {
         loginSuccessMsg.textContent = "Invalid Details";

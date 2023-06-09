@@ -53,8 +53,6 @@ signup.addEventListener("click", () => {
 function checkEmpty(value, error) {
   if (value === "") {
     error.textContent = "Required*";
-  } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
-    error.textContent = "Please enter valid input";
   } else {
     error.textContent = "";
   }

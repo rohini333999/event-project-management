@@ -21,17 +21,38 @@
             <a href="addevent" class="signup-text">Add Event</a>
             <a href="myevents" class="signup-text" id="myevents"></a>
         </div>
+       
         <button id="signup" class="button"></button>
+        
      </header>
     
     <div class="filters-header-container">
+     <% puts cookies[:user_id] %>
       <button id="filters-button" class="button">Filters</button>
       <button id="sort-button" class="button">Sort by</button>
+
+      <% if @sortParams %>
+          <button class="active-filter-button"> <%= @sortParams.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
+      <% end %>
+
+       <% if @filterParams %>
+          <% array = @filterParams.split("|") %>
+              <% array.each do |item| %>
+                <button class="active-filter-button"> <%= item.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelFilterActive(event)"></i></button>
+              <% end %>
+       <% end %>
+      
+
+     
+      
     </div>
     
+   <%# <%= link_to "Sort by today", { filter: 'today|tomorrow' } %> 
+
+
     <h1 class="all-events-heading">All Events</h1>
-    
     <div id="events-container" class="events-container">
+     
       <%= @allEvents.each do |each| %>
         <div class="event-card-container">
             <img src=<%= each.location_url %> class="event-image"/>
@@ -40,10 +61,23 @@
               <p><%= each.location %></p>
               <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
               <p>Event Date <%= each.start_date %></p>
-              <a href= "events/<%= each.id %>">View Details</a>   
+              <a href= "events/<%= each.id %>" class="view-btn">View Details</a> 
+              <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>  
           </div>
         </div>
       <% end %>       
+    </div>
+
+    <div id="remove-container">
+      <div class="bg-blur">
+          <div class="filter-popup">
+              <p>Are you sure to remove event</p>
+              <div class="buttons-container">
+                  <button class="yes-button" onclick="removeYes(event)">Yes</button>
+                  <button class="no-button" onclick="removeNo(event)">No</button>
+              </div>
+          </div>
+      </div>
     </div>
    
     <div id="sort-container" >
@@ -56,7 +90,7 @@
                 </div>
                 <div>
                   <input type="radio" id="sort-fee" name="title" value="fee">
-                  <label for="sort-fee"  >Entry Fee</label>
+                  <label for="sort-fee" >Entry Fee</label>
                 </div>
                 <div>
                    <input type="radio" id="sort-date" name="title" value="date">

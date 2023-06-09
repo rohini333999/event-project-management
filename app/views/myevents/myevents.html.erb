@@ -12,6 +12,7 @@
     <div>
        <h1>My Events</h1>
          <div id="myevents-container" class="myevents-container">
+         <%= puts @userId %>
          <%= @events.each do |each| %>
             <div class="myevent-card-container">
                   <img src=<%= each.location_url %> class="myevent-image"/>
