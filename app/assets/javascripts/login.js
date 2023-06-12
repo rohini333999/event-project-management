@@ -77,14 +77,12 @@ loginForm.addEventListener("submit", async (event) => {
           console.log("utc", date.toUTCString());
 
           let expires = "expires=" + date.toUTCString();
-          document.cookie = `${name}=${value}; ${expires}`;
+          document.cookie = `${name}=${value}; ${expires};path=/;`;
         }
         // document.getElementById("cookie-value").textContent = "";
         console.log("coockie", document.cookie);
-        setCookie("user_id", validUser.id, 1);
 
-        setCookie("login_user", null, null);
-        localStorage.setItem("loginUser", JSON.stringify(validUser));
+        setCookie("user_id", validUser.id, 1);
       } else {
         loginSuccessMsg.textContent = "Invalid Details";
 

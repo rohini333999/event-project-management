@@ -111,25 +111,22 @@ const removeContainer = document.getElementById("remove-container");
 //   },
 // ];
 
-console.log(decodeURIComponent(document.cookie).split(""));
+console.log("cookie", decodeURIComponent(document.cookie));
 
-localStorage.getItem("loginUser")
-  ? (signup.textContent = "Logout")
-  : (signup.textContent = "Login");
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+  console.log("utc", date.toUTCString());
 
-localStorage.getItem("loginUser")
-  ? (myevents.textContent = "My Events")
-  : (myevents.textContent = "");
+  let expires = "expires=" + date.toUTCString();
+  document.cookie = `${name}=${value}; ${expires}`;
+}
 
 signup.addEventListener("click", () => {
   console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {
-    signup.textContent = "Login";
+    setCookie("user_id", null, null);
 
-    // document.getElementById("cookie-value").textContent = "";
-    // document.cookie = `user_id=null`;
-
-    localStorage.removeItem("loginUser");
     window.location.href = "/";
   } else if (signup.textContent === "Login") {
     window.location.href = "/login";
@@ -234,6 +231,18 @@ function cancelFilterActive(event) {
   }
 }
 
+async function fetchUrl(url) {
+  try {
+    let response = await fetch(url);
+    let result = await response.json();
+
+    eventsContainer.innerHTML = "";
+    eventsContainer.innerHTML = result.events;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 sortPopupButton.addEventListener("click", async () => {
   sortContainer.classList.add("no-display");
   if (sortFee.checked) {
@@ -259,77 +268,37 @@ sortPopupButton.addEventListener("click", async () => {
 
     let url = `http://localhost:3000/sort?sort=entry-fee`;
 
-    try {
-      let response = await fetch(url);
-      let result = await response.json();
-      eventsContainer.innerHTML = "";
-      eventsContainer.innerHTML = result.events;
-    } catch (error) {
-      console.log(error);
-    }
-
-    // let currentUrl = new URL(window.location.href);
-    // let searchParams = currentUrl.searchParams;
-
-    // searchParams.set("sort", "entry-fee");
-    // currentUrl.search = searchParams.toString();
-
-    // window.location.href = currentUrl.toString();
+    fetchUrl(url);
   } else if (sortDate.checked) {
     let url = `http://localhost:3000/sort?sort=date`;
 
-    try {
-      let response = await fetch(url);
-      let result = await response.json();
-      console.log("result", result);
-      eventsContainer.innerHTML = "";
-      eventsContainer.innerHTML = result.events;
-    } catch (error) {
-      console.log(error);
-    }
-
-    // let currentUrl = new URL(window.location.href);
-    // let searchParams = currentUrl.searchParams;
-    // console.log(searchParams);
-
-    // searchParams.set("sort", "date");
-
-    // currentUrl.search = searchParams.toString();
-    // window.location.href = currentUrl.toString();
+    fetchUrl(url);
   }
 });
 
-filterPopupButton.addEventListener("click", () => {
+filterPopupButton.addEventListener("click", async () => {
   filterContainer.classList.add("no-display");
 
-  let currentUrl = new URL(window.location.href);
-  let searchParams = currentUrl.searchParams;
-
   if (thisWeek.checked) {
-    searchParams.set("filter", "this-week");
+    let url = "http://localhost:3000/filter?filter=this-week";
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    fetchUrl(url);
   } else if (today.checked && tomorrow.checked && thisWeek.checked) {
-    searchParams.set("filter", "today|tomorrow|this-week");
+    let url = "http://localhost:3000/filter?filter=today|tomorrow|this-week";
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    fetchUrl(url);
   } else if (today.checked && tomorrow.checked) {
-    searchParams.set("filter", "today|tomorrow");
+    let url = "http://localhost:3000/filter?filter=today|tomorrow";
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    fetchUrl(url);
   } else if (today.checked) {
-    searchParams.set("filter", "today");
+    let url = "http://localhost:3000/filter?filter=today";
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    fetchUrl(url);
   } else if (tomorrow.checked) {
-    searchParams.set("filter", "tomorrow");
+    let url = "http://localhost:3000/filter?filter=tomorrow";
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    fetchUrl(url);
   }
 });
 console.count("outside");

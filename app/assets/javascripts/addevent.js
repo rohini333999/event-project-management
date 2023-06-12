@@ -21,6 +21,16 @@ console.log(allInputElements);
 
 let validObject = { validStartDate: true, validEndDate: true };
 
+signup.addEventListener("click", () => {
+  if (signup.textContent === "Logout") {
+    document.cookie = "user_id=null;max-age=0;";
+
+    window.location.href = "/";
+  } else if (signup.textContent === "Login") {
+    window.location.href = "/login";
+  }
+});
+
 function getInputs() {
   let allEvents = {};
 
@@ -30,7 +40,29 @@ function getInputs() {
   return allEvents;
 }
 
-if (localStorage.getItem("loginUser")) {
+function getCookie(name) {
+  const cookieValue = decodeURIComponent(document.cookie);
+  const cookieArray = cookieValue.split("; ");
+  let result = null;
+  cookieArray.forEach((value) => {
+    if (value.indexOf(name) == 0) {
+      result = value.substring(name.length + 1);
+      console.log(result);
+    }
+  });
+  return result;
+}
+console.log("getcookie", getCookie("user_id"));
+
+// if (localStorage.getItem("loginUser")) {
+//   signup.textContent = "Logout";
+//   showLogin.classList.add("no-display");
+// } else {
+//   signup.textContent = "Login";
+//   newEventContainer.classList.add("no-display");
+// }
+
+if (getCookie("user_id")) {
   signup.textContent = "Logout";
   showLogin.classList.add("no-display");
 } else {
@@ -38,17 +70,26 @@ if (localStorage.getItem("loginUser")) {
   newEventContainer.classList.add("no-display");
 }
 
-signup.addEventListener("click", () => {
-  console.log("signup", signup.textContent);
-  if (signup.textContent === "Logout") {
-    signup.textContent = "Login";
+// signup.addEventListener("click", () => {
+//   console.log("signup", signup.textContent);
+//   if (signup.textContent === "Logout") {
+//     signup.textContent = "Login";
 
-    localStorage.removeItem("loginUser");
-    window.location.href = "/login";
-  } else if (signup.textContent === "Login") {
-    window.location.href = "/login";
-  }
-});
+//     localStorage.removeItem("loginUser");
+//     window.location.href = "/";
+//   } else if (signup.textContent === "Login") {
+//     window.location.href = "/login";
+//   }
+// });
+
+// function deleteCookie(name, value, days) {
+//   const date = new Date();
+//   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+//   console.log("utc", date.toUTCString());
+
+//   let expires = "expires=" + date.toUTCString();
+//   document.cookie = `${name}=${value};max-age=0;`;
+// }
 
 function checkEmpty(value, error) {
   if (value === "") {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_080827) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_12_122745) do
   create_table "events", force: :cascade do |t|
     t.string "event_name"
     t.string "description"
@@ -48,6 +48,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_080827) do
   end
 
   add_foreign_key "events", "users", column: "users_id"
-  add_foreign_key "registers", "events", column: "events_id"
-  add_foreign_key "registers", "users", column: "users_id"
+  add_foreign_key "registers", "events", column: "events_id", on_delete: :cascade
+  add_foreign_key "registers", "users", column: "users_id", on_delete: :cascade
 end

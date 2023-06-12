@@ -12,10 +12,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#home"
   get "/sort" => "home#sort"
+  get "/filter" => "home#filter"
   get "signup" => "frontend#signup"
+
   get "login" => "login#login"
   get "addevent" => "addevent#addevent"
   get "/events/:id" => "events#events"
   get "myevents" => "myevents#myevents"
  
+  get "/notfound" => "notfound#notfound"
 end

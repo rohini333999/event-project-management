@@ -22,7 +22,11 @@
             <div class="manage-event">
                 <a class="signup-text" href="/">Events</a>
             </div>
-            <button id="signup" class="button"></button>
+        <% if cookies[:user_id] %>
+            <button id="signup" class="button">Logout</button>
+        <% else %>
+             <button id="signup" class="button">Login</button>
+        <% end %>
         </div>
     </header>
     <div id="loader">

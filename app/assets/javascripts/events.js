@@ -3,22 +3,16 @@ const eventDetailsContainer = document.getElementById(
   "event-details-container"
 );
 const loader = document.getElementById("loader");
+const signup = document.getElementById("signup");
 
 loader.classList.add("no-display");
-
-if (localStorage.getItem("loginUser")) {
-  signup.textContent = "Logout";
-} else {
-  signup.textContent = "Login";
-}
 
 signup.addEventListener("click", () => {
   console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {
-    signup.textContent = "Login";
+    document.cookie = "user_id=null;path=/;max-age=0;";
 
-    localStorage.removeItem("loginUser");
-    window.location.href = "/login";
+    window.location.href = "/";
   } else if (signup.textContent === "Login") {
     window.location.href = "/login";
   }

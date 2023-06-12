@@ -17,10 +17,17 @@
         </div>
         <div class="manage-event">
             <a href="addevent" class="signup-text">Add Event</a>
-            <a href="myevents" class="signup-text" id="myevents"></a>
+            
+            <a href="myevents" class="signup-text" id="myevents">
+              <%= cookies[:user_id] ? "My events" : ""%>
+            </a>
         </div>
+        <% if cookies[:user_id] %>
+            <button id="signup" class="button">Logout</button>
+        <% else %>
+             <button id="signup" class="button">Login</button>
+        <% end %>
        
-        <button id="signup" class="button"></button>
         
      </header>
     
@@ -39,12 +46,6 @@
               <% end %>
        <% end %>     
     </div>
-    
-   <%# <%= link_to "Sort by today", { filter: 'today|tomorrow' } %> 
- <%# check %>
-
-
-
     <h1 class="all-events-heading">All Events</h1>
    
     <%= render partial: "home/event_list"%>
