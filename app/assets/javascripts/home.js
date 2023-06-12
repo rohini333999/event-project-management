@@ -111,7 +111,8 @@ const removeContainer = document.getElementById("remove-container");
 //   },
 // ];
 
-document.getElementById("cookie-value");
+console.log(decodeURIComponent(document.cookie).split(""));
+
 localStorage.getItem("loginUser")
   ? (signup.textContent = "Logout")
   : (signup.textContent = "Login");
@@ -124,6 +125,9 @@ signup.addEventListener("click", () => {
   console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {
     signup.textContent = "Login";
+
+    // document.getElementById("cookie-value").textContent = "";
+    // document.cookie = `user_id=null`;
 
     localStorage.removeItem("loginUser");
     window.location.href = "/";
@@ -187,6 +191,7 @@ cancelFilter.addEventListener("click", () => {
 
 function cancelSortActive(event) {
   console.log("cancel click", event.target.parentElement);
+
   let currentUrl = new URL(window.location.href);
   let searchParams = currentUrl.searchParams;
   event.target.parentElement.textContent = "";
@@ -229,24 +234,68 @@ function cancelFilterActive(event) {
   }
 }
 
-sortPopupButton.addEventListener("click", () => {
+sortPopupButton.addEventListener("click", async () => {
+  sortContainer.classList.add("no-display");
   if (sortFee.checked) {
-    let currentUrl = new URL(window.location.href);
-    let searchParams = currentUrl.searchParams;
+    let xhr = new XMLHttpRequest();
+    // let url = "http://localhost:3000/sort";
+    // let data = "sort=entry-fee";
 
-    searchParams.set("sort", "entry-fee");
-    currentUrl.search = searchParams.toString();
+    // xhr.open("POST", url, false);
+    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    window.location.href = currentUrl.toString();
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.readyState === 4 && xhr.status === 200) {
+    //     // Request completed successfully
+    //     var response = xhr.responseText;
+    //     console.log(response);
+    //   } else {
+    //     // Request failed
+    //     console.error("Request failed. Status:", xhr.status);
+    //   }
+    // };
+
+    // xhr.send(data);
+
+    let url = `http://localhost:3000/sort?sort=entry-fee`;
+
+    try {
+      let response = await fetch(url);
+      let result = await response.json();
+      eventsContainer.innerHTML = "";
+      eventsContainer.innerHTML = result.events;
+    } catch (error) {
+      console.log(error);
+    }
+
+    // let currentUrl = new URL(window.location.href);
+    // let searchParams = currentUrl.searchParams;
+
+    // searchParams.set("sort", "entry-fee");
+    // currentUrl.search = searchParams.toString();
+
+    // window.location.href = currentUrl.toString();
   } else if (sortDate.checked) {
-    let currentUrl = new URL(window.location.href);
-    let searchParams = currentUrl.searchParams;
-    console.log(searchParams);
+    let url = `http://localhost:3000/sort?sort=date`;
 
-    searchParams.set("sort", "date");
+    try {
+      let response = await fetch(url);
+      let result = await response.json();
+      console.log("result", result);
+      eventsContainer.innerHTML = "";
+      eventsContainer.innerHTML = result.events;
+    } catch (error) {
+      console.log(error);
+    }
 
-    currentUrl.search = searchParams.toString();
-    window.location.href = currentUrl.toString();
+    // let currentUrl = new URL(window.location.href);
+    // let searchParams = currentUrl.searchParams;
+    // console.log(searchParams);
+
+    // searchParams.set("sort", "date");
+
+    // currentUrl.search = searchParams.toString();
+    // window.location.href = currentUrl.toString();
   }
 });
 
@@ -258,6 +307,11 @@ filterPopupButton.addEventListener("click", () => {
 
   if (thisWeek.checked) {
     searchParams.set("filter", "this-week");
+
+    currentUrl.search = searchParams.toString();
+    window.location.href = currentUrl.toString();
+  } else if (today.checked && tomorrow.checked && thisWeek.checked) {
+    searchParams.set("filter", "today|tomorrow|this-week");
 
     currentUrl.search = searchParams.toString();
     window.location.href = currentUrl.toString();

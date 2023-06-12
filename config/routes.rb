@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#home"
+  get "/sort" => "home#sort"
   get "signup" => "frontend#signup"
   get "login" => "login#login"
   get "addevent" => "addevent#addevent"

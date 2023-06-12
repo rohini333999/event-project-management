@@ -36,7 +36,7 @@ ul {
 a {
   text-decoration: none;
 }
-.bg-create-account {
+/* .bg-create-account {
   background-color: white;
   color: #000000;
 }
@@ -76,7 +76,6 @@ a {
 .input-field-container {
   display: flex;
   flex-direction: column;
-
   gap: 8px;
   width: 90%;
 }
@@ -85,7 +84,7 @@ a {
   position: absolute;
   margin-top: 75px;
   font-size: 14px;
-}
+} */
 
 /* header */
 
@@ -117,7 +116,7 @@ a {
 }
 
 /* event-page */
-.event-card-container {
+/* .event-card-container {
   border: none;
   border-radius: 8px;
   box-shadow: 5px 5px 10px #bcbcef;
@@ -168,7 +167,7 @@ a {
 }
 .all-events-heading {
   margin: 16px 0px 16px 36px;
-}
+} */
 
 /* add event */
 
@@ -202,8 +201,7 @@ a {
   display: flex;
   gap: 16px;
 }
-.event-button {
-}
+
 .add-event-container {
   display: flex;
   flex-direction: column;

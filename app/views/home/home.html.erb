@@ -5,12 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track" => "reload" %>
-   
-
+    <%= stylesheet_link_tag "home", media: "all", "data-turbo-track" => "reload" %>
 </head>
 <body>
+
     <header>
       <div class="header-container">
         <div class="logo-container">
@@ -27,10 +25,9 @@
      </header>
     
     <div class="filters-header-container">
-     <% puts cookies[:user_id] %>
       <button id="filters-button" class="button">Filters</button>
       <button id="sort-button" class="button">Sort by</button>
-
+     <%= puts @sortParams %>
       <% if @sortParams %>
           <button class="active-filter-button"> <%= @sortParams.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
       <% end %>
@@ -40,33 +37,17 @@
               <% array.each do |item| %>
                 <button class="active-filter-button"> <%= item.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelFilterActive(event)"></i></button>
               <% end %>
-       <% end %>
-      
-
-     
-      
+       <% end %>     
     </div>
     
    <%# <%= link_to "Sort by today", { filter: 'today|tomorrow' } %> 
+ <%# check %>
+
 
 
     <h1 class="all-events-heading">All Events</h1>
-    <div id="events-container" class="events-container">
-     
-      <%= @allEvents.each do |each| %>
-        <div class="event-card-container">
-            <img src=<%= each.location_url %> class="event-image"/>
-          <div class="event-header" id="event-header">
-              <h2 class="event-name"><%= each.event_name %></h2>
-              <p><%= each.location %></p>
-              <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
-              <p>Event Date <%= each.start_date %></p>
-              <a href= "events/<%= each.id %>" class="view-btn">View Details</a> 
-              <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>  
-          </div>
-        </div>
-      <% end %>       
-    </div>
+   
+    <%= render partial: "home/event_list"%>
 
     <div id="remove-container">
       <div class="bg-blur">
@@ -132,7 +113,8 @@
         </div>
     </div>
 
-     <%= javascript_include_tag "home", "data-turbo-track" => "reload" %> 
-     <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script>
+     <%= javascript_include_tag "home", "data-turbo-track" => "reload" %>
+     <script src="https://kit.fontawesome.com/32c85e0eb8.js" crossorigin="anonymous"></script> 
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </body>
 </html>

@@ -30,7 +30,7 @@ function checkPassword(event) {
     isPassword = true;
   }
 }
-
+console.log("coockie", document.cookie);
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -69,10 +69,21 @@ loginForm.addEventListener("submit", async (event) => {
 
         loginForm.reset();
 
-        document.cookie = `user_id=${JSON.stringify(validUser.id)}`;
+        // document.cookie = `user_id=${JSON.stringify(validUser.id)}`;
 
+        function setCookie(name, value, days) {
+          const date = new Date();
+          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+          console.log("utc", date.toUTCString());
+
+          let expires = "expires=" + date.toUTCString();
+          document.cookie = `${name}=${value}; ${expires}`;
+        }
         // document.getElementById("cookie-value").textContent = "";
         console.log("coockie", document.cookie);
+        setCookie("user_id", validUser.id, 1);
+
+        setCookie("login_user", null, null);
         localStorage.setItem("loginUser", JSON.stringify(validUser));
       } else {
         loginSuccessMsg.textContent = "Invalid Details";
