@@ -34,8 +34,10 @@ signup.addEventListener("click", () => {
 });
 
 function checkEmpty(value, error) {
-  if (value === "") {
+  if (value === "" || value === "select") {
     error.textContent = "Required*";
+  } else if (value.length <= 3 && typeof value === "string") {
+    error.textContent = "Value must be more than 3 character";
   } else {
     error.textContent = "";
   }
@@ -85,45 +87,63 @@ function checkFee(event) {
     errorValue.textContent = "";
   }
 }
+function checkCategory(event) {
+  let eventValue = event.target.value;
+  let errorValue = event.target.nextElementSibling;
+
+  checkEmpty(eventValue, errorValue);
+}
+
+function checkSeats(event) {
+  let eventValue = event.target.value;
+  let errorValue = event.target.nextElementSibling;
+
+  if (eventValue === "") {
+    errorValue.textContent = "Required*";
+  } else {
+    errorValue.textContent = "";
+  }
+}
 
 function checkStartDate(event) {
-  let allEvents = getInputs();
+  let endDate = document.querySelector('input[name="end_date"]');
 
-  let date1 = new Date(allEvents.end_date);
+  let date1 = new Date(endDate.value);
   let date2 = new Date(event.target.value);
 
   if (event.target.value === "") {
-    endDateErr.textContent = "Please enter Event end date";
+    endDateErr.textContent = "Please enter Event start date";
 
     validObject.validStartDate = false;
   }
   if (date1 < date2) {
+    console.log("date", date1, date2);
     endDateErr.textContent = "Start date must be before end date";
 
     validObject.validStartDate = false;
   } else {
     endDateErr.textContent = "";
-    validObjectvalidStartDate = true;
+    validObject.validStartDate = true;
   }
 }
 function checkEndDate(event) {
-  let allEvents = getInputs();
+  let startDate = document.querySelector('input[name="start_date"]');
 
-  let date1 = new Date(allEvents.start_date);
+  let date1 = new Date(startDate.value);
   let date2 = new Date(event.target.value);
 
   if (event.target.value === "") {
-    endDateErr.textContent = "Please enter Event end date";
+    endDateErr.textContent = "Please enter Event start date";
 
-    validObject.validEndDate = false;
+    validObject.validStartDate = false;
   }
   if (date1 > date2) {
     endDateErr.textContent = "Start date must be before end date";
 
-    validObject.validEndDate = false;
+    validObject.validStartDate = false;
   } else {
     endDateErr.textContent = "";
-    validObject.validEndDate = true;
+    validObject.validStartDate = true;
   }
 }
 
@@ -140,10 +160,26 @@ if (addeventForm) {
         allValid = false;
       }
     });
+
+    console.log(allInputElements);
+
     allInputElements.forEach((each) => {
-      if (each.value === "") {
+      if (each.value === "" || each.value === "select") {
+        if (each.name === "start_date" || each.name === "end_date") {
+          each.nextElementSibling.nextElementSibling.textContent = "Required*";
+        } else {
+          each.nextElementSibling.textContent = "Required*";
+        }
+
         emptyFields.push(each.name);
       } else {
+        console.log(each);
+
+        if (each.name === "start_date" || each.name === "end_date") {
+          each.nextElementSibling.nextElementSibling.textContent = "";
+        } else {
+          each.nextElementSibling.textContent = "";
+        }
         if (each.name === "start_time" || each.name === "end_time") {
           let [h, m] = each.value.split(":");
 
@@ -156,10 +192,13 @@ if (addeventForm) {
         }
       }
     });
+    console.log("empty", emptyFields);
 
     if (emptyFields.length !== 0) {
-      alert("Please enter all the values");
+      eventErrMsg.textContent = "Please enter all the values";
     } else if (allValid) {
+      eventErrMsg.textContent = "";
+
       function getCookie(name) {
         const cookieValue = decodeURIComponent(document.cookie);
         const cookieArray = cookieValue.split("; ");
@@ -184,7 +223,7 @@ if (addeventForm) {
         },
         body: JSON.stringify(eventList),
       };
-
+      console.log(eventList);
       try {
         const response = await fetch(url, options);
 

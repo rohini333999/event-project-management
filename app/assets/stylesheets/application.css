@@ -290,9 +290,7 @@ a {
   align-self: center;
   cursor: pointer;
 }
-.button:hover {
-  background-color: #111e4a;
-}
+
 .no-display {
   display: none;
 }
@@ -333,6 +331,7 @@ a {
 }
 .end-date-err {
   color: #b30303;
+  margin-top: 15px;
 }
 
 /* display-event */
@@ -401,7 +400,15 @@ a {
 }
 .after-register {
   background-color: #008000;
+  color: #ffffff;
+  text-align: center;
+  border: none;
+  width: 80px;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 8px;
 }
+
 .error-msg {
   color: #b30303;
   position: absolute;
@@ -409,7 +416,13 @@ a {
 
   font-size: 14px;
 }
+.time-field-container .error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 45px;
 
+  font-size: 14px;
+}
 /* my-events */
 .myevents-container {
   display: flex;
@@ -491,6 +504,7 @@ a {
 .remove-button {
   background-color: #b30303;
   cursor: pointer;
+  align-self: flex-start;
 }
 .view-btn {
   color: #0a0aef;

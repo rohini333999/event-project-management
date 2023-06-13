@@ -59,7 +59,7 @@
         
             <div class="event-field-container">
                 <label for="event-type" class="event-type">Type of event</label>
-                <select id="event-type" class="event-field" name="category">
+                <select id="event-type" class="event-field" name="category" onchange="checkCategory(event)">
                     <option value="select">Select</option>
                     <option value="conference">Conference</option>
                     <option value="webinar">Webinar</option>
@@ -77,7 +77,7 @@
             </div>
             <div class="event-field-container">
                 <label class="size" for="seats">Maximum seats</label>
-                <select id="seats" class="event-field" name="seats"> 
+                <select id="seats" class="event-field" name="seats" onchange="checkSeats(event)"> 
                     <option value="select"> Select</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
@@ -92,16 +92,18 @@
                 <label for="start-time" class="start-time">Starts at</label>
                 <div class="time-field-container">           
                     <input type="date" id="start-date" class="event-field" name="start_date" onchange="checkStartDate(event)"/>
+                    
                     <input type="time" class="event-field" id="start-time" name="start_time" >
+                    <p class="error-msg"></p>
                 </div>
-               
+                
             </div>
             <div class="event-field-container">
                 <label for="end-time" class="end-time">Ends at</label>
                 <div class="time-field-container">
                     <input type="date" id="end-date" class="event-field" name="end_date" onchange="checkEndDate(event)"/>
                     <input type="time" class="event-field" id="end-time" name="end_time"/>
-
+                     <p class="error-msg"></p>
                 </div>
                 <p id="end-date-err" class="end-date-err"></p>
             </div>

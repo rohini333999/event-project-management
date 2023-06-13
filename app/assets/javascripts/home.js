@@ -179,49 +179,6 @@ cancelMark.addEventListener("click", () => {
 cancelFilter.addEventListener("click", () => {
   filterContainer.classList.add("no-display");
 });
-
-function cancelSortActive(event) {
-  let currentUrl = new URL(window.location.href);
-  let searchParams = currentUrl.searchParams;
-  event.target.parentElement.textContent = "";
-
-  searchParams.delete("sort");
-  currentUrl.search = searchParams.toString();
-
-  window.location.href = currentUrl.toString();
-}
-
-function cancelFilterActive(event) {
-  let filterValue = event.target.parentElement.textContent;
-
-  let currentUrl = new URL(window.location.href);
-  let searchParams = currentUrl.searchParams;
-
-  if (searchParams.get("filter") === "today|tomorrow") {
-    if (filterValue.trim() === "Today") {
-      filterValue = "";
-
-      searchParams.set("filter", "tomorrow");
-      currentUrl.search = searchParams.toString();
-
-      window.location.href = currentUrl.toString();
-    }
-    if (filterValue.trim() === "Tomorrow") {
-      filterValue = "";
-
-      searchParams.set("filter", "today");
-      currentUrl.search = searchParams.toString();
-
-      window.location.href = currentUrl.toString();
-    }
-  } else {
-    searchParams.delete("filter");
-    currentUrl.search = searchParams.toString();
-
-    window.location.href = currentUrl.toString();
-  }
-}
-
 async function fetchUrl(url) {
   try {
     let response = await fetch(url);
@@ -235,18 +192,58 @@ async function fetchUrl(url) {
   }
 }
 
+let sort;
+let filter;
+
+function cancelSortActive(event) {
+  sort = undefined;
+
+  let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
+  fetchUrl(url);
+
+  filtersActive.innerHTML = "";
+}
+
+function cancelFilterActive(event) {
+  // let filterValue = event.target.parentElement.textContent;
+  // let currentUrl = new URL(window.location.href);
+  // let searchParams = currentUrl.searchParams;
+  // if (searchParams.get("filter") === "today|tomorrow") {
+  //   if (filterValue.trim() === "Today") {
+  //     filterValue = "";
+  //     searchParams.set("filter", "tomorrow");
+  //     currentUrl.search = searchParams.toString();
+  //     window.location.href = currentUrl.toString();
+  //   }
+  //   if (filterValue.trim() === "Tomorrow") {
+  //     filterValue = "";
+  //     searchParams.set("filter", "today");
+  //     currentUrl.search = searchParams.toString();
+  //     window.location.href = currentUrl.toString();
+  //   }
+  // } else {
+  //   searchParams.delete("filter");
+  //   currentUrl.search = searchParams.toString();
+  //   window.location.href = currentUrl.toString();
+  // }
+}
+
 sortPopupButton.addEventListener("click", async () => {
   sortContainer.classList.add("no-display");
   if (sortFee.checked) {
-    let url = `http://localhost:3000/sort?sort=entry-fee`;
+    // let url = `http://localhost:3000/sort?sort=entry-fee`;
 
+    sort = "entry-fee";
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
+    console.log("url", url);
     filtersActive.innerHTML = `
     <button class="active-filter-button"> Entry fee  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
     `;
 
     fetchUrl(url);
   } else if (sortDate.checked) {
-    let url = `http://localhost:3000/sort?sort=date`;
+    sort = "date";
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
     filtersActive.innerHTML = `
     <button class="active-filter-button"> Date  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
     `;
@@ -258,23 +255,38 @@ filterPopupButton.addEventListener("click", async () => {
   filterContainer.classList.add("no-display");
 
   if (thisWeek.checked) {
-    let url = "http://localhost:3000/filter?filter=this-week";
+    filter = "this-week";
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
+    console.log("this", url);
 
     fetchUrl(url);
   } else if (today.checked && tomorrow.checked && thisWeek.checked) {
-    let url = "http://localhost:3000/filter?filter=today|tomorrow|this-week";
+    filter = "today|tomorrow|this-week";
+
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
 
     fetchUrl(url);
   } else if (today.checked && tomorrow.checked) {
-    let url = "http://localhost:3000/filter?filter=today|tomorrow";
+    filter = "today|tomorrow";
+
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
 
     fetchUrl(url);
   } else if (today.checked) {
-    let url = "http://localhost:3000/filter?filter=today";
+    filter = "today";
+
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
 
     fetchUrl(url);
   } else if (tomorrow.checked) {
-    let url = "http://localhost:3000/filter?filter=tomorrow";
+    filter = "tomorrow";
+
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
+
+    fetchUrl(url);
+  } else {
+    filter = undefined;
+    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
 
     fetchUrl(url);
   }

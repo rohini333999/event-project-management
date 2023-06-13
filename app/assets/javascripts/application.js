@@ -166,14 +166,6 @@ if (accountForm) {
       console.log("userslist", usersList);
       let url = "http://localhost:3000/api/v1/users";
 
-      const options = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(usersList),
-      };
-
       try {
         const response = await fetch(url);
         const allUsers = await response.json();
@@ -188,6 +180,13 @@ if (accountForm) {
           successMsg.textContent = "User already exists, Login to continue";
           accountForm.reset();
         } else {
+          const options = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(usersList),
+          };
           const postResponse = await fetch(url, options);
           const result = await postResponse.json();
           successMsg.textContent = "User registered successfully";

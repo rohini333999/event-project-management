@@ -50,6 +50,7 @@
                         <i class="fa-solid fa-wallet fa-sm"></i>
                         <p>$<%= event.entry_fee %></p>
                     </div>
+                    <button onclick="removeEvent(event, <%= event.id %>,<%= cookies[:user_id]%>)" class="button remove-button">Remove</button>
                 </div> 
             </div>
          <% end %>

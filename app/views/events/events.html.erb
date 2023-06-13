@@ -63,7 +63,23 @@
                         <i class="fa-solid fa-wallet fa-lg"></i>
                         <p><%= @singleEvent.entry_fee %></p>
                     </div>
-                    <button class="button register" onclick="clickRegister(event)" name="register">Register</button>
+                   
+                    <% utc_time_string = @singleEvent.start_time.to_s %>
+                    <% time_with_timezone = ActiveSupport::TimeZone['UTC'].parse(utc_time_string).in_time_zone('Eastern Time (US & Canada)') %>
+                    <% start_time = time_with_timezone.strftime('%l:%M %P') %>
+
+                   <% utc_time_string = @singleEvent.end_time.to_s %>
+                    <% time_with_timezone = ActiveSupport::TimeZone['UTC'].parse(utc_time_string).in_time_zone('Eastern Time (US & Canada)') %>
+                    <% end_time = time_with_timezone.strftime('%l:%M %P') %>
+
+                    <p>Timings : <%= start_time %> <%= end_time %></p>
+                     
+                    <% if @checkRegister %>
+                        <button class="after-register register" name="register" id="register-button">Added</button>
+                    <% else %>
+                       <button class="button register" name="register" id="register-button" onclick="clickRegister(event)">Register</button>
+                    <% end %>
+                    
                     <div></div>
                 </div>
              </div>

@@ -25,6 +25,13 @@ class Api::V1::RegisterController < ApplicationController
   end
 
   def destroy
+    event = Register.find(params[:id])
+    if event
+      event.destroy
+      render json: {
+        message: "event deleted"
+      }
+    end
   end
 
   private
