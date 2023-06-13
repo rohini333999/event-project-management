@@ -15,7 +15,7 @@
   <body>
     <header>
       <div class="header-container">
-        <div class="logo-container">
+        <div class="logo-container" onclick = "clickLogoContainer()">
           <%= image_tag("events-pic.png",{:style => "height:45px;width:45px;margin-right:10px;"}) %>
           <h2> Event</h2>
         </div>
@@ -23,7 +23,7 @@
       <div class="bg-create-account">
         <div class="create-account-container">
           <h1>Create Account</h1>
-          <form class="form-container" id="account-form" action="/signup" accept-charset="UTF-8" method="post" novalidate>
+          <form class="form-container" id="account-form" novalidate>
           <%# <%= form_for user do |f| %> 
             <div class="input-field-container">
               <label for="fullname" class="input-label"

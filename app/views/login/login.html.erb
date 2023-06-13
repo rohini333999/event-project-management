@@ -16,7 +16,7 @@
   <body>
     <header>
       <div class="header-container">
-        <div class="logo-container">
+        <div class="logo-container" onclick = "clickLogoContainer()">
           <%= image_tag("events-pic.png",{:style => "height:45px;width:45px;margin-right:10px;"}) %>
           <h2> Event</h2>
         </div>
@@ -37,7 +37,7 @@
                 name="email"
                 onkeyup = "checkEmail(event)"
               />
-              <p class="error-msg" id="email-error"></p>
+              <p class="pw-error-msg" id="email-error"></p>
             </div>
             <div class="input-field-container">
               <label for="password">Enter Password</label>
@@ -50,13 +50,14 @@
                 name="password"
                 onkeyup = "checkPassword(event)"
               />
-              <p class="error-msg" id="password-error"></p>
+              <p class="pw-error-msg" id="password-error"></p>
             </div>
            <button type="submit" class="submit-button">Submit</button>
           </form>
           <p>Don't have account, Please <a href="signup">Signup</a> here</p>
+          <p id="invalid-error" class="invalid-error"></p>
           <p id="login-success-msg"></p> 
-          <a href="/" id="go-home"></a>
+          <p id="go-home"></p>
         </div>
       </div>
     </div>

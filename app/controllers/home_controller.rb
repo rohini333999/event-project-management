@@ -3,16 +3,7 @@ class HomeController < ApplicationController
         begin
         @userId = cookies[:login_user] 
         @allEvents = Event.all
-
-        @filterParams = params[:filter]
-        @sortParams = params[:sort]
         
-       
-       
-       
-        if params[:filter] == "this-week"
-            @allEvents = Event.where(start_date: Date.current.beginning_of_week..(Date.current.end_of_week))
-        end
        rescue => e
         render json: { error: e }, status: :unprocessable_entity
       end
@@ -27,7 +18,7 @@ class HomeController < ApplicationController
             @allEvents = events.order(entry_fee: :asc)
 
              partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
+            render json: { success: true, events: partial , sortParams: params[:sort]}
         end
         if params[:sort] == 'date'
             events = Event.all

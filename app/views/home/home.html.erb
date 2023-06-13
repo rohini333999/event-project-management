@@ -16,7 +16,9 @@
           <p class="logo-head"> Event</p>
         </div>
         <div class="manage-event">
-            <a href="addevent" class="signup-text">Add Event</a>
+            <a href="addevent" class="signup-text">
+                <%= cookies[:user_id] == "59" ? "Add Event" : ""%>
+            </a>
             
             <a href="myevents" class="signup-text" id="myevents">
               <%= cookies[:user_id] ? "My events" : ""%>
@@ -34,6 +36,9 @@
     <div class="filters-header-container">
       <button id="filters-button" class="button">Filters</button>
       <button id="sort-button" class="button">Sort by</button>
+      <div id="filters-active">
+      </div>
+     
      <%= puts @sortParams %>
       <% if @sortParams %>
           <button class="active-filter-button"> <%= @sortParams.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>

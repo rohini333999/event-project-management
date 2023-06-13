@@ -10,21 +10,21 @@
 <body>
     <header>
       <div class="header-container">
-        <div class="logo-container">
+        <div class="logo-container" id="logo-container">
           <%= image_tag("events-pic.png",{:style => "height:35px;width:35px;margin-right:5px;"}) %>
           <p class="logo-head"> Event</p>
         </div>
         <div class="manage-event">
             <a class="signup-text" href="/">Events</a>
-         </div>
-         <button id="signup" class="button">
-          </button>
+         </div> 
+        <% if cookies[:user_id] %>
+            <button id="signup" class="button">Logout</button>
+        <% else %>
+             <button id="signup" class="button">Login</button>
+        <% end %>
         </div>
      </header>
      
-     <div class="" id="show-login">
-          Please <a href="login">Login</a> to add event</a>
-     </div>
 
     <div class="new-event-container" id="new-event-container">
         <h1>Create new event</h1>
@@ -37,9 +37,10 @@
             </div>
             <div class="event-field-container">
                 <label for="description">Description</label>
-                <textarea id="description" rows="3" cols="25" name="description" onkeyup="checkDescription(event)"></textarea> 
+                <textarea id="description" rows="2" cols="25" name="description" onkeyup="checkDescription(event)"></textarea> 
                 <p class="error-msg"></p>          
             </div>
+            
             <div class="event-field-container">
                 <label for="event-location">Location</label>
                 <input type="text" id="event-location" class="event-field" name="location" onkeyup="checkLocation(event)"/>

@@ -9,8 +9,12 @@
               <p><%= each.location %></p>
               <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
               <p>Event Date <%= each.start_date %></p>
-              <a href= "events/<%= each.id %>" class="view-btn">View Details</a> 
-              <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>  
+              <a href= "events/<%= each.id %>" class="view-btn">View Details</a>
+               
+              
+               <% if cookies[:user_id] == "59" %>
+               <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>
+              <% end %>
           </div>
         </div>
       <% end %>       

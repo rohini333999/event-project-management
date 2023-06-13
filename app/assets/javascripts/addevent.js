@@ -21,6 +21,10 @@ console.log(allInputElements);
 
 let validObject = { validStartDate: true, validEndDate: true };
 
+logoContainer.addEventListener("click", () => {
+  window.location.href = "/";
+});
+
 signup.addEventListener("click", () => {
   if (signup.textContent === "Logout") {
     document.cookie = "user_id=null;max-age=0;";
@@ -30,66 +34,6 @@ signup.addEventListener("click", () => {
     window.location.href = "/login";
   }
 });
-
-function getInputs() {
-  let allEvents = {};
-
-  allInputElements.forEach((each) => {
-    allEvents[each.name] = each.value;
-  });
-  return allEvents;
-}
-
-function getCookie(name) {
-  const cookieValue = decodeURIComponent(document.cookie);
-  const cookieArray = cookieValue.split("; ");
-  let result = null;
-  cookieArray.forEach((value) => {
-    if (value.indexOf(name) == 0) {
-      result = value.substring(name.length + 1);
-      console.log(result);
-    }
-  });
-  return result;
-}
-console.log("getcookie", getCookie("user_id"));
-
-// if (localStorage.getItem("loginUser")) {
-//   signup.textContent = "Logout";
-//   showLogin.classList.add("no-display");
-// } else {
-//   signup.textContent = "Login";
-//   newEventContainer.classList.add("no-display");
-// }
-
-if (getCookie("user_id")) {
-  signup.textContent = "Logout";
-  showLogin.classList.add("no-display");
-} else {
-  signup.textContent = "Login";
-  newEventContainer.classList.add("no-display");
-}
-
-// signup.addEventListener("click", () => {
-//   console.log("signup", signup.textContent);
-//   if (signup.textContent === "Logout") {
-//     signup.textContent = "Login";
-
-//     localStorage.removeItem("loginUser");
-//     window.location.href = "/";
-//   } else if (signup.textContent === "Login") {
-//     window.location.href = "/login";
-//   }
-// });
-
-// function deleteCookie(name, value, days) {
-//   const date = new Date();
-//   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-//   console.log("utc", date.toUTCString());
-
-//   let expires = "expires=" + date.toUTCString();
-//   document.cookie = `${name}=${value};max-age=0;`;
-// }
 
 function checkEmpty(value, error) {
   if (value === "") {
@@ -101,28 +45,28 @@ function checkEmpty(value, error) {
 
 function checkEvent(event) {
   let eventValue = event.target.value;
-  let errorValue = event.target.nextSibling;
-
+  let errorValue = event.target.nextElementSibling;
+  console.log("sibling", errorValue);
   checkEmpty(eventValue, errorValue);
 }
 
 function checkDescription(event) {
   let eventValue = event.target.value;
-  let errorValue = event.target.nextSibling;
+  let errorValue = event.target.nextElementSibling;
 
   checkEmpty(eventValue, errorValue);
 }
 
 function checkLocation(event) {
   let eventValue = event.target.value;
-  let errorValue = event.target.nextSibling;
+  let errorValue = event.target.nextElementSibling;
 
   checkEmpty(eventValue, errorValue);
 }
 
 function checkLocationUrl(event) {
   let eventValue = event.target.value;
-  let errorValue = event.target.nextSibling;
+  let errorValue = event.target.nextElementSibling;
 
   if (eventValue === "") {
     errorValue.textContent = "Required*";
@@ -133,7 +77,7 @@ function checkLocationUrl(event) {
 
 function checkFee(event) {
   let eventValue = event.target.value;
-  let errorValue = event.target.nextSibling;
+  let errorValue = event.target.nextElementSibling;
 
   if (eventValue === "") {
     errorValue.textContent = "Required*";
@@ -224,13 +168,24 @@ if (addeventForm) {
     });
 
     if (emptyFields.length !== 0) {
-      eventErrMsg.textContent = "All fields are required";
+      alert("Please enter all the values");
     } else if (allValid) {
-      let users_id = JSON.parse(localStorage.getItem("loginUser"))["id"];
+      function getCookie(name) {
+        const cookieValue = decodeURIComponent(document.cookie);
+        const cookieArray = cookieValue.split("; ");
 
-      console.log("users_id", users_id);
+        let result = null;
+        cookieArray.forEach((value) => {
+          if (value.indexOf(name) == 0) {
+            result = value.substring(name.length + 1);
+            console.log(result);
+          }
+        });
+        return result;
+      }
+      console.log("getcookie", getCookie("user_id"));
 
-      eventList["users_id"] = users_id;
+      eventList["users_id"] = getCookie("user_id");
       console.log("Eventslist", JSON.stringify(eventList));
 
       let url = "http://localhost:3000/api/v1/events";

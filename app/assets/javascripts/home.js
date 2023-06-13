@@ -23,6 +23,7 @@ const thisWeek = document.getElementById("this-week");
 
 const myevents = document.getElementById("myevents");
 const removeContainer = document.getElementById("remove-container");
+const filtersActive = document.getElementById("filters-active");
 
 // const eventsData = [
 //   {
@@ -200,7 +201,7 @@ function cancelSortActive(event) {
 }
 
 function cancelFilterActive(event) {
-  console.log(event.target.parentElement.textContent);
+  console.log("can el filer", event.target.parentElement.textContent);
   let filterValue = event.target.parentElement.textContent;
 
   let currentUrl = new URL(window.location.href);
@@ -237,6 +238,7 @@ async function fetchUrl(url) {
     let result = await response.json();
 
     eventsContainer.innerHTML = "";
+    console.log("sort", result);
     eventsContainer.innerHTML = result.events;
   } catch (error) {
     console.log(error);
@@ -246,32 +248,18 @@ async function fetchUrl(url) {
 sortPopupButton.addEventListener("click", async () => {
   sortContainer.classList.add("no-display");
   if (sortFee.checked) {
-    let xhr = new XMLHttpRequest();
-    // let url = "http://localhost:3000/sort";
-    // let data = "sort=entry-fee";
-
-    // xhr.open("POST", url, false);
-    // xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.readyState === 4 && xhr.status === 200) {
-    //     // Request completed successfully
-    //     var response = xhr.responseText;
-    //     console.log(response);
-    //   } else {
-    //     // Request failed
-    //     console.error("Request failed. Status:", xhr.status);
-    //   }
-    // };
-
-    // xhr.send(data);
-
     let url = `http://localhost:3000/sort?sort=entry-fee`;
+
+    filtersActive.innerHTML = `
+    <button class="active-filter-button"> Entry fee  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
+    `;
 
     fetchUrl(url);
   } else if (sortDate.checked) {
     let url = `http://localhost:3000/sort?sort=date`;
-
+    filtersActive.innerHTML = `
+    <button class="active-filter-button"> Date  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
+    `;
     fetchUrl(url);
   }
 });

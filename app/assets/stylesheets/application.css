@@ -86,6 +86,12 @@ a {
   font-size: 14px;
 } */
 
+.pw-error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 75px;
+  font-size: 14px;
+}
 /* header */
 
 .header-container {
@@ -101,9 +107,16 @@ a {
   display: flex;
   align-items: center;
 }
-.logo-head {
-  font-size: 18px;
-  color: #17172d;
+@media (max-width: 370px) {
+  .logo-head {
+    display: none;
+  }
+}
+@media (min-width: 370px) {
+  .logo-head {
+    font-size: 18px;
+    color: #17172d;
+  }
 }
 .signup-text {
   color: #4a4a82;
@@ -170,10 +183,19 @@ a {
 } */
 
 /* add event */
-
+.invalid-error {
+  color: #bd0606;
+  font-size: 20px;
+}
+.event-error-msg {
+  color: #b30303;
+}
 .new-event-container {
   background-color: #dfdff3;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .event-field-container {
@@ -255,7 +277,7 @@ a {
   gap: 16px;
 }
 .button {
-  background-color: #9797e6;
+  background-color: #4747f1;
   color: #ffffff;
   text-align: center;
   border: none;
@@ -319,6 +341,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 15px;
 }
 
 .single-event-image {
@@ -328,7 +351,7 @@ a {
 }
 @media (min-width: 1024px) {
   .single-event-image-div {
-    width: 40vw;
+    /* width: 40vw; */
     align-items: flex-start;
     margin-left: 20px;
   }
@@ -357,9 +380,10 @@ a {
 @media (min-width: 768px) {
   .each-event {
     display: flex;
+    gap: 30px;
   }
   .event-details-container {
-    margin-top: 25px;
+    margin-top: 40px;
   }
 }
 .each-event .description {
@@ -375,6 +399,13 @@ a {
 }
 .after-register {
   background-color: #008000;
+}
+.error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 66px;
+
+  font-size: 14px;
 }
 
 /* my-events */
@@ -468,4 +499,7 @@ a {
   padding: 6px 6px 6px 6px;
   border: none;
   border-radius: 8px;
+}
+.logo-container {
+  cursor: pointer;
 }

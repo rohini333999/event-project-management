@@ -8,6 +8,7 @@ const confirmPasswordError = document.getElementById("confirm-password-error");
 const successMsg = document.getElementById("success-msg");
 
 const allElements = document.querySelectorAll("input");
+
 console.log("input", allElements);
 
 let nameValid = true;
@@ -15,6 +16,10 @@ let emailValid = true;
 
 let passwordValid = true;
 let confirmPasswordValid = true;
+
+function clickLogoContainer() {
+  window.location.href = "/";
+}
 
 function checkUsername(event) {
   if (event.target.value === "") {
@@ -108,94 +113,101 @@ function blurConfirmPassword(event) {
   }
 }
 
-accountForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  allElements.forEach((input) => {
-    if (input.value === "") {
-      if (input.name === "fullname") {
-        nameError.textContent = "Required*";
-
-        nameValid = false;
-      } else if (input.name === "email") {
-        emailError.textContent = "Required*";
-
-        emailValid = false;
-      } else if (input.name === "password") {
-        passwordError.textContent = "Required*";
-
-        passwordValid = false;
-      } else if (input.name === "confirmPassword") {
-        confirmPasswordError.textContent = "Required*";
-
-        confirmPasswordValid = false;
-      }
-    }
-  });
-
-  if (passwordValue !== confirmPasswordValue) {
-    confirmPasswordError.textContent = "Password must be same";
-
-    confirmPasswordValid = false;
-  } else if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
-    const usersList = {
-      fullname: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
+if (accountForm) {
+  accountForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
     allElements.forEach((input) => {
-      if (input.name === "fullname") {
-        usersList.fullname = input.value;
-      } else if (input.name === "email") {
-        usersList.email = input.value;
-      } else if (input.name === "password") {
-        usersList.password = input.value;
-      } else if (input.name === "confirmPassword") {
-        usersList.confirmPassword = input.value;
+      if (input.value === "") {
+        if (input.name === "fullname") {
+          nameError.textContent = "Required*";
+
+          nameValid = false;
+        } else if (input.name === "email") {
+          emailError.textContent = "Required*";
+
+          emailValid = false;
+        } else if (input.name === "password") {
+          passwordError.textContent = "Required*";
+
+          passwordValid = false;
+        } else if (input.name === "confirmPassword") {
+          confirmPasswordError.textContent = "Required*";
+
+          confirmPasswordValid = false;
+        }
       }
     });
 
-    console.log("userslist", usersList);
-    let url = "http://localhost:3000/api/v1/users";
+    if (passwordValue !== confirmPasswordValue) {
+      confirmPasswordError.textContent = "Password must be same";
 
-    let options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(usersList),
-    };
+      confirmPasswordValid = false;
+    } else if (
+      nameValid &&
+      emailValid &&
+      passwordValid &&
+      confirmPasswordValid
+    ) {
+      const usersList = {
+        fullname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      };
 
-    try {
-      const response = await fetch(url);
-      console.log("postresponse", response);
-      const allUsers = await response.json();
-
-      console.log("allusers", allUsers);
-      const existMail = allUsers.filter((each) => {
-        return each.email === usersList.email;
+      allElements.forEach((input) => {
+        if (input.name === "fullname") {
+          usersList.fullname = input.value;
+        } else if (input.name === "email") {
+          usersList.email = input.value;
+        } else if (input.name === "password") {
+          usersList.password = input.value;
+        } else if (input.name === "confirmPassword") {
+          usersList.confirmPassword = input.value;
+        }
       });
-      console.log("exits", existMail);
 
-      if (!response.ok) {
-        throw new Error("Error:", response.status);
-      } else if (existMail.length !== 0) {
-        successMsg.textContent = "User already exists, Login to continue";
-        accountForm.reset();
-      } else {
-        const postResponse = await fetch(url, options);
-        const result = await postResponse.json();
-        successMsg.textContent = "User registered successfully";
-        console.log(result);
+      console.log("userslist", usersList);
+      let url = "http://localhost:3000/api/v1/users";
+
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(usersList),
+      };
+
+      try {
+        const response = await fetch(url);
+        console.log("postresponse", response);
+        const allUsers = await response.json();
+
+        console.log("allusers", allUsers);
+        const existMail = allUsers.filter((each) => {
+          return each.email === usersList.email;
+        });
+        console.log("exits", existMail);
 
         if (!response.ok) {
-          throw new Error("error:" + response.status);
+          throw new Error("Error:", response.status);
+        } else if (existMail.length !== 0) {
+          successMsg.textContent = "User already exists, Login to continue";
+          accountForm.reset();
+        } else {
+          const postResponse = await fetch(url, options);
+          const result = await postResponse.json();
+          successMsg.textContent = "User registered successfully";
+          console.log(result);
+
+          if (!response.ok) {
+            throw new Error("error:" + response.status);
+          }
         }
+      } catch (error) {
+        console.log("Error:", error);
       }
-    } catch (error) {
-      console.log("Error:", error);
     }
-  }
-});
+  });
+}
