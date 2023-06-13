@@ -9,8 +9,6 @@ const successMsg = document.getElementById("success-msg");
 
 const allElements = document.querySelectorAll("input");
 
-console.log("input", allElements);
-
 let nameValid = true;
 let emailValid = true;
 
@@ -26,7 +24,6 @@ function checkUsername(event) {
     nameError.textContent = "Required*";
     nameValid = false;
   } else if (!/^[a-zA-Z\s]+$/.test(event.target.value)) {
-    console.log("key user");
     nameError.textContent = "Enter valid username";
     nameValid = false;
   } else {
@@ -54,8 +51,6 @@ let passwordValue;
 let confirmPasswordValue;
 
 function checkPassword(event) {
-  console.log("targetname", event.target.name);
-
   let passwordInput = event.target.value;
   if (passwordInput === "") {
     passwordError.textContent = "Required*";
@@ -181,14 +176,11 @@ if (accountForm) {
 
       try {
         const response = await fetch(url);
-        console.log("postresponse", response);
         const allUsers = await response.json();
 
-        console.log("allusers", allUsers);
         const existMail = allUsers.filter((each) => {
           return each.email === usersList.email;
         });
-        console.log("exits", existMail);
 
         if (!response.ok) {
           throw new Error("Error:", response.status);
@@ -199,7 +191,6 @@ if (accountForm) {
           const postResponse = await fetch(url, options);
           const result = await postResponse.json();
           successMsg.textContent = "User registered successfully";
-          console.log(result);
 
           if (!response.ok) {
             throw new Error("error:" + response.status);

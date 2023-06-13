@@ -112,19 +112,15 @@ const filtersActive = document.getElementById("filters-active");
 //   },
 // ];
 
-console.log("cookie", decodeURIComponent(document.cookie));
-
 function setCookie(name, value, days) {
   const date = new Date();
   date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-  console.log("utc", date.toUTCString());
 
   let expires = "expires=" + date.toUTCString();
   document.cookie = `${name}=${value}; ${expires}`;
 }
 
 signup.addEventListener("click", () => {
-  console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {
     setCookie("user_id", null, null);
 
@@ -139,7 +135,6 @@ removeContainer.classList.add("no-display");
 let removeId;
 function removeEvent(event, id) {
   removeContainer.classList.remove("no-display");
-  console.log("id", id);
   removeId = id;
 }
 
@@ -152,8 +147,6 @@ async function removeYes(event) {
   try {
     const response = await fetch(url, options);
     // const result = await response.json();
-
-    console.log("result", response);
 
     if (response.ok) {
       removeContainer.classList.add("no-display");
@@ -188,8 +181,6 @@ cancelFilter.addEventListener("click", () => {
 });
 
 function cancelSortActive(event) {
-  console.log("cancel click", event.target.parentElement);
-
   let currentUrl = new URL(window.location.href);
   let searchParams = currentUrl.searchParams;
   event.target.parentElement.textContent = "";
@@ -201,7 +192,6 @@ function cancelSortActive(event) {
 }
 
 function cancelFilterActive(event) {
-  console.log("can el filer", event.target.parentElement.textContent);
   let filterValue = event.target.parentElement.textContent;
 
   let currentUrl = new URL(window.location.href);
@@ -238,7 +228,7 @@ async function fetchUrl(url) {
     let result = await response.json();
 
     eventsContainer.innerHTML = "";
-    console.log("sort", result);
+
     eventsContainer.innerHTML = result.events;
   } catch (error) {
     console.log(error);

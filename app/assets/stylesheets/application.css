@@ -129,7 +129,7 @@ a {
 }
 
 /* event-page */
-/* .event-card-container {
+.event-card-container {
   border: none;
   border-radius: 8px;
   box-shadow: 5px 5px 10px #bcbcef;
@@ -141,7 +141,8 @@ a {
 .event-image {
   height: 200px;
   width: 100%;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .events-container {
@@ -164,6 +165,7 @@ a {
 }
 .event-name {
   color: #111e4a;
+  font-size: 22px;
 }
 .manage-event {
   display: flex;
@@ -180,7 +182,7 @@ a {
 }
 .all-events-heading {
   margin: 16px 0px 16px 36px;
-} */
+}
 
 /* add event */
 .invalid-error {
@@ -496,10 +498,13 @@ a {
 .active-filter-button {
   background-color: #111e4a;
   color: white;
-  padding: 6px 6px 6px 6px;
+  padding: 8px;
   border: none;
   border-radius: 8px;
 }
 .logo-container {
   cursor: pointer;
+}
+.my-event-heading {
+  margin: 15px 0px 20px 30px;
 }

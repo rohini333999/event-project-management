@@ -1,17 +1,14 @@
 
  <div id="events-container" class="events-container">
-     <%= puts @sortParams%>
       <% @allEvents.each do |each| %>
         <div class="event-card-container">
             <img src=<%= each.location_url %> class="event-image"/>
           <div class="event-header" id="event-header">
-              <h2 class="event-name"><%= each.event_name %></h2>
+              <h3 class="event-name"><%= each.event_name %></h3>
               <p><%= each.location %></p>
               <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
               <p>Event Date <%= each.start_date %></p>
               <a href= "events/<%= each.id %>" class="view-btn">View Details</a>
-               
-              
                <% if cookies[:user_id] == "59" %>
                <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>
               <% end %>

@@ -17,8 +17,6 @@ const newEventContainer = document.getElementById("new-event-container");
 
 addEventSuccess.classList.add("no-display");
 
-console.log(allInputElements);
-
 let validObject = { validStartDate: true, validEndDate: true };
 
 logoContainer.addEventListener("click", () => {
@@ -46,7 +44,7 @@ function checkEmpty(value, error) {
 function checkEvent(event) {
   let eventValue = event.target.value;
   let errorValue = event.target.nextElementSibling;
-  console.log("sibling", errorValue);
+
   checkEmpty(eventValue, errorValue);
 }
 
@@ -89,7 +87,6 @@ function checkFee(event) {
 }
 
 function checkStartDate(event) {
-  console.log("check start date", event.target.value);
   let allEvents = getInputs();
 
   let date1 = new Date(allEvents.end_date);
@@ -110,7 +107,6 @@ function checkStartDate(event) {
   }
 }
 function checkEndDate(event) {
-  console.log("check end date", event.target.value);
   let allEvents = getInputs();
 
   let date1 = new Date(allEvents.start_date);
@@ -134,7 +130,6 @@ function checkEndDate(event) {
 if (addeventForm) {
   addeventForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    console.log("target", event.target.name);
 
     let emptyFields = [];
     let eventList = {};
@@ -146,11 +141,7 @@ if (addeventForm) {
       }
     });
     allInputElements.forEach((each) => {
-      console.log(each.value);
-      console.log(each.name);
       if (each.value === "") {
-        console.log("entered");
-
         emptyFields.push(each.name);
       } else {
         if (each.name === "start_time" || each.name === "end_time") {
@@ -159,7 +150,6 @@ if (addeventForm) {
           let meridian =
             ((h % 12 ? h % 12 : 12) + ":" + m, h >= 12 ? "PM" : "AM");
 
-          console.log(meridian);
           eventList[each.name] = each.value + " " + meridian;
         } else {
           eventList[each.name] = each.value;
@@ -178,15 +168,12 @@ if (addeventForm) {
         cookieArray.forEach((value) => {
           if (value.indexOf(name) == 0) {
             result = value.substring(name.length + 1);
-            console.log(result);
           }
         });
         return result;
       }
-      console.log("getcookie", getCookie("user_id"));
 
       eventList["users_id"] = getCookie("user_id");
-      console.log("Eventslist", JSON.stringify(eventList));
 
       let url = "http://localhost:3000/api/v1/events";
 
@@ -202,13 +189,10 @@ if (addeventForm) {
         const response = await fetch(url, options);
 
         const postEvent = await response.json();
-        console.log("response", response);
 
         if (!response.ok) {
           throw new Error("Error:", response.status);
         } else {
-          console.log("postEvent", postEvent);
-
           addEventSuccess.classList.remove("no-display");
           addeventForm.reset();
         }
