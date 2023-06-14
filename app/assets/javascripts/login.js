@@ -18,17 +18,22 @@ function clickLogoContainer() {
 }
 
 function checkEmail(event) {
-  if (event.target.value === "") {
+  if (event.target.value.trim() === "") {
     emailError.textContent = "Required*";
+    isEmail = false;
+  } else if (
+    !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(event.target.value)
+  ) {
+    emailError.textContent = "Enter valid mail";
     isEmail = false;
   } else {
     emailError.textContent = "";
-    isEmail = false;
+    isEmail = true;
   }
 }
 
 function checkPassword(event) {
-  if (event.target.value === "") {
+  if (event.target.value.trim() === "") {
     passwordError.textContent = "Required*";
     isPassword = false;
   } else {
@@ -92,7 +97,7 @@ loginForm.addEventListener("submit", async (event) => {
 
         setCookie("user_id", validUser.id, 1);
       } else {
-        invalidError.textContent = "Invalid Details";
+        invalidError.textContent = "Details not found";
 
         goHome.textContent = "";
       }

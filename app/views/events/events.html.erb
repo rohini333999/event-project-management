@@ -72,7 +72,7 @@
                     <% time_with_timezone = ActiveSupport::TimeZone['UTC'].parse(utc_time_string).in_time_zone('Eastern Time (US & Canada)') %>
                     <% end_time = time_with_timezone.strftime('%l:%M %P') %>
 
-                    <p>Timings : <%= start_time %> <%= end_time %></p>
+                    <p>Timings : <%= start_time %> to <%= end_time %></p>
                      
                     <% if @checkRegister %>
                         <button class="after-register register" name="register" id="register-button">Added</button>

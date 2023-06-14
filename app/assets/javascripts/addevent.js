@@ -23,6 +23,23 @@ logoContainer.addEventListener("click", () => {
   window.location.href = "/";
 });
 
+function getCookie(name) {
+  const cookieValue = decodeURIComponent(document.cookie);
+  const cookieArray = cookieValue.split("; ");
+  let result = null;
+  cookieArray.forEach((value) => {
+    if (value.indexOf(name) == 0) {
+      result = value.substring(name.length + 1);
+      console.log(result);
+    }
+  });
+  return result;
+}
+console.log("getcookie", getCookie("user_id"));
+if (!getCookie("user_id")) {
+  window.location.href = "/notfound";
+}
+
 signup.addEventListener("click", () => {
   if (signup.textContent === "Logout") {
     document.cookie = "user_id=null;max-age=0;";
@@ -33,15 +50,21 @@ signup.addEventListener("click", () => {
   }
 });
 
+console.log(/^[^@#$%^&*!]+$/.test("#$$"));
 function checkEmpty(value, error) {
   if (value === "" || value === "select") {
     error.textContent = "Required*";
-  } else if (value.length <= 3 && typeof value === "string") {
+  } else if (!/^[^@#$%^&*!]+$/.test(value)) {
+    console.log("special char");
+    error.textContent = "Please enter valid input";
+  } else if (value.length <= 3) {
     error.textContent = "Value must be more than 3 character";
   } else {
     error.textContent = "";
   }
 }
+
+function closeEndTime(event) {}
 
 function checkEvent(event) {
   let eventValue = event.target.value;

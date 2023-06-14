@@ -20,7 +20,7 @@ function clickLogoContainer() {
 }
 
 function checkUsername(event) {
-  if (event.target.value === "") {
+  if (event.target.value.trim() === "") {
     nameError.textContent = "Required*";
     nameValid = false;
   } else if (!/^[a-zA-Z\s]+$/.test(event.target.value)) {
@@ -33,7 +33,8 @@ function checkUsername(event) {
 }
 
 function checkEmail(event) {
-  if (event.target.value === "") {
+  if (event.target.value.trim() === "") {
+    console.log("trim");
     emailError.textContent = "Required*";
     emailValid = false;
   } else if (
@@ -52,7 +53,7 @@ let confirmPasswordValue;
 
 function checkPassword(event) {
   let passwordInput = event.target.value;
-  if (passwordInput === "") {
+  if (passwordInput.trim() === "") {
     passwordError.textContent = "Required*";
 
     passwordValid = false;
@@ -68,7 +69,7 @@ function checkPassword(event) {
 }
 function checkConfirmPassword(event) {
   let confirmPasswordInput = event.target.value;
-  if (confirmPasswordInput === "") {
+  if (confirmPasswordInput.trim() === "") {
     confirmPasswordError.textContent = "Required*";
 
     confirmPasswordValid = false;

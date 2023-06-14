@@ -4,6 +4,23 @@ function clickLogoContainer() {
   window.location.href = "/";
 }
 
+function getCookie(name) {
+  const cookieValue = decodeURIComponent(document.cookie);
+  const cookieArray = cookieValue.split("; ");
+  let result = null;
+  cookieArray.forEach((value) => {
+    if (value.indexOf(name) == 0) {
+      result = value.substring(name.length + 1);
+      console.log(result);
+    }
+  });
+  return result;
+}
+console.log("getcookie", getCookie("user_id"));
+if (!getCookie("user_id")) {
+  window.location.href = "/notfound";
+}
+
 signup.addEventListener("click", () => {
   console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {

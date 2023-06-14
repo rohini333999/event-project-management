@@ -41,38 +41,7 @@ class HomeController < ApplicationController
         
     end 
 
-    def filter
-        if params[:filter] == "this-week"
-            @allEvents = Event.where(start_date: Date.current.beginning_of_week..(Date.current.end_of_week))
-
-            partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
-        end
-        if params[:filter] == "today"
-            @allEvents = Event.where(start_date: Date.today)
-
-            partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
-        end
-        if params[:filter] == "tomorrow"
-            @allEvents = Event.where(start_date: Date.tomorrow)
-
-            partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
-        end
-        if params[:filter] == "today|tomorrow"
-            @allEvents = Event.where(start_date: Date.today..(Date.tomorrow))
-
-            partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
-        end
-        if params[:filter] == "today|tomorrow|this-week"
-            @allEvents = Event.where(start_date: Date.current.beginning_of_week..(Date.current.end_of_week))
-            
-            partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
-        end
-    end
+   
 
     private
     def sort_params 

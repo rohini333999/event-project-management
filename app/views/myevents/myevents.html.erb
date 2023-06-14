@@ -21,7 +21,7 @@
             <% if cookies[:user_id] %>
                 <button id="signup" class="button">Logout</button>
             <% else %>
-                 <% controller.redirect_to "http://localhost:3000/notfound"%>
+                <% controller.redirect_to "/notfound" %> 
             <% end %>
         </div>
     </header>
