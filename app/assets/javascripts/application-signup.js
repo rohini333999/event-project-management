@@ -185,8 +185,8 @@ if (accountForm) {
             },
             body: JSON.stringify(usersList),
           };
-          console.log("userslistttt", usersList);
-          const postResponse = await fetch(url, options).then;
+
+          const postResponse = await fetch(url, options);
           const result = await postResponse.json();
 
           if (response.ok) {
