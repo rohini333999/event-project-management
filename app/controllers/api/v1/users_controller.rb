@@ -17,8 +17,7 @@ class Api::V1::UsersController < ApplicationController
     newuser = User.new(
       fullname: user_params[:fullname],
       email: user_params[:email],
-      password: user_params[:password],
-      confirmPassword:user_params[:confirmPassword]
+      password: user_params[:password]
     )
     
     if newuser.save
@@ -58,8 +57,8 @@ class Api::V1::UsersController < ApplicationController
     params.require(:user).permit([
       :fullname,
       :email,
-      :password,
-      :confirmPassword
+      :password
+      
     ])
   end
 end

@@ -1,12 +1,15 @@
 
  <div id="events-container" class="events-container">
-      <% @allEvents.each do |each| %>
+      <% if @allEvents.length == 0 %>
+          <h3 class="no-result">No results found, Please try with another input</h3>
+      <% else %>
+          <% @allEvents.each do |each| %>
         <div class="event-card-container">
             <img src=<%= each.location_url %> class="event-image"/>
           <div class="event-header" id="event-header">
               <h3 class="event-name"><%= each.event_name %></h3>
               <p><%= each.location %></p>
-              <p id="event-fee">Entry Fee $<%= each.entry_fee %></p> 
+              <p id="event-fee">Entry Fee <i class="fa-solid fa-indian-rupee-sign fa-sm"></i><%= each.entry_fee %></p> 
               <p>Event Date <%= each.start_date %></p>
               <a href= "events/<%= each.id %>" class="view-btn">View Details</a>
                <% if cookies[:user_id] == "59" %>
@@ -14,5 +17,7 @@
               <% end %>
           </div>
         </div>
-      <% end %>       
+      <% end %>    
+      <% end %>
+         
     </div>

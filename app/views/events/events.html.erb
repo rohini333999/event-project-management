@@ -20,7 +20,7 @@
                 <p class="logo-head"> Event</p>
             </div>
             <div class="manage-event">
-                <a class="signup-text" href="/">Events</a>
+                <a class="signup-text" href="/myevents">My Events</a>
             </div>
         <% if cookies[:user_id] %>
             <button id="signup" class="button">Logout</button>
@@ -29,9 +29,7 @@
         <% end %>
         </div>
     </header>
-    <div id="loader">
-        Loading...
-    </div>
+   
     <div id="page-error" class="page-error">
         
     </div>
@@ -61,7 +59,7 @@
                     </div>
                     <div class="icon-container">
                         <i class="fa-solid fa-wallet fa-lg"></i>
-                        <p><%= @singleEvent.entry_fee %></p>
+                        <p><i class="fa-solid fa-indian-rupee-sign fa-sm"></i> <%= @singleEvent.entry_fee %></p>
                     </div>
                    
                     <% utc_time_string = @singleEvent.start_time.to_s %>

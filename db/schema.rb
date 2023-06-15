@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_12_132708) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_14_091204) do
   create_table "events", force: :cascade do |t|
     t.string "event_name"
     t.string "description"
@@ -42,7 +42,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_12_132708) do
     t.string "fullname"
     t.string "email"
     t.string "password"
-    t.string "confirmPassword"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "role", default: "user"

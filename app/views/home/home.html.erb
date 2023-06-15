@@ -21,7 +21,7 @@
             </a>
             
             <a href="myevents" class="signup-text" id="myevents">
-              <%= cookies[:user_id] ? "My events" : ""%>
+              <%= cookies[:user_id] ? "My Events" : ""%>
             </a>
         </div>
         <% if cookies[:user_id] %>
@@ -34,22 +34,20 @@
      </header>
     
     <div class="filters-header-container">
-      <button id="filters-button" class="button">Filters</button>
-      <button id="sort-button" class="button">Sort by</button>
-      <div id="filters-active">
+      <div class="filter-buttons">
+          <button id="filters-button" class="button">Filters</button>
+          <button id="sort-button" class="button">Sort by</button>
+          <div id="filters-active">
+          </div>
+          <div id="sort-active">
+          </div> 
+      </div>  
+      <div class="search-container">
+          <div class="search-icon">
+              <i class="fa-solid fa-magnifying-glass fa-sm"></i>
+          </div>
+          <input type="search" name="search" class="search-field" id="search-input" onkeyup="changeSearch(event)" >
       </div>
-     
-     <%= puts @sortParams %>
-      <% if @sortParams %>
-          <button class="active-filter-button"> <%= @sortParams.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
-      <% end %>
-
-       <% if @filterParams %>
-          <% array = @filterParams.split("|") %>
-              <% array.each do |item| %>
-                <button class="active-filter-button"> <%= item.capitalize %>  <i class="fa-solid fa-xmark" onclick="cancelFilterActive(event)"></i></button>
-              <% end %>
-       <% end %>     
     </div>
     <h1 class="all-events-heading">All Events</h1>
    

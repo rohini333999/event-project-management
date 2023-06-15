@@ -24,7 +24,8 @@
         <div class="create-account-container">
           <h1>Create Account</h1>
           <form class="form-container" id="account-form" novalidate>
-             <div class="input-field-container">
+         
+            <div class="input-field-container">
               <label for="fullname" class="input-label"
                 >Enter Your Fullname</label
               >
@@ -86,11 +87,11 @@
         
           </form>
       
-          <p class="info-text">Have a account, Please <a href="login">Login</a> here</p>
+          <p>Have a account, Please <a href="login">Login</a> here</p>
           <p class="success-msg" id="success-msg"></p>
         </div>
       </div>
     </div>
-    <%= javascript_include_tag "application", "data-turbo-track" => "reload" %>
+    <%= javascript_include_tag "application-signup", "data-turbo-track" => "reload" %>
   </body>
 </html>

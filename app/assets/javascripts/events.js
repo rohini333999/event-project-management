@@ -2,11 +2,9 @@ const pageError = document.getElementById("page-error");
 const eventDetailsContainer = document.getElementById(
   "event-details-container"
 );
-const loader = document.getElementById("loader");
+
 const signup = document.getElementById("signup");
 const registerButton = document.getElementById("register-button");
-
-loader.classList.add("no-display");
 
 async function getRegister() {
   let url = "http://localhost:3000/api/v1/register";

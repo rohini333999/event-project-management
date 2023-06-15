@@ -37,7 +37,7 @@ function getCookie(name) {
 }
 console.log("getcookie", getCookie("user_id"));
 if (!getCookie("user_id")) {
-  window.location.href = "/notfound";
+  window.location.href = "/login";
 }
 
 signup.addEventListener("click", () => {

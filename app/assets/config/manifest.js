@@ -8,3 +8,5 @@
 //= link login.js
 //= link events.js
 //= link myevents.js
+//= link style.css
+//= link application-signup.js

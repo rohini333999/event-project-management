@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   get "myevents" => "myevents#myevents"
  
   get "/notfound" => "notfound#notfound"
+  match "*path", to: "notfound#notfound", via: :all
 end

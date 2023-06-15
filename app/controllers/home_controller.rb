@@ -11,33 +11,41 @@ class HomeController < ApplicationController
     end
 
     def sort
-        @sortParams = params[:sort]
+        @sortParams = params
         @allEvents = Event.all
 
+     
 
-        if params[:filter] == "this-week"
+        if params[:filter] == "This-week"
             @allEvents = Event.where(start_date: Date.current.beginning_of_week..(Date.current.end_of_week))
         end
-        if params[:filter] == "today"
+        if params[:filter] == "Today"
             @allEvents = Event.where(start_date: Date.today)
         end
-        if params[:filter] == "tomorrow"
+        if params[:filter] == "Tomorrow"
             @allEvents = Event.where(start_date: Date.tomorrow)           
         end
-        if params[:filter] == "today|tomorrow"
+        if params[:filter] == "Today|Tomorrow"
             @allEvents = Event.where(start_date: Date.today..(Date.tomorrow))
-       end
-        if params[:filter] == "today|tomorrow|this-week"
+        end
+        if params[:filter] == "Today|Tomorrow|This-week"
             @allEvents = Event.where(start_date: Date.current.beginning_of_week..(Date.current.end_of_week))           
         end
-        if params[:sort] == 'entry-fee'
+
+        if params[:sort] == 'Entry-fee'
             @allEvents = @allEvents.order(entry_fee: :asc)      
         end
-        if params[:sort] == 'date'
+        if params[:sort] == 'Date'
             @allEvents = @allEvents.order(start_date: :asc)
         end
+
+        if params[:search] != "undefined"
+            searchTerm = params[:search]
+            @allEvents = @allEvents.where("event_name LIKE ?", "%#{searchTerm}%")
+        end
+
         partial = render_to_string(partial: "home/event_list")
-            render json: { success: true, events: partial }
+        render json: { success: true, events: partial, params: params }
         
     end 
 

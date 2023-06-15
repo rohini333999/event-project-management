@@ -25,6 +25,9 @@ const myevents = document.getElementById("myevents");
 const removeContainer = document.getElementById("remove-container");
 const filtersActive = document.getElementById("filters-active");
 
+const sortActive = document.getElementById("sort-active");
+const searchInput = document.getElementById("search-input");
+
 // const eventsData = [
 //   {
 //     id: 1,
@@ -179,14 +182,28 @@ cancelMark.addEventListener("click", () => {
 cancelFilter.addEventListener("click", () => {
   filterContainer.classList.add("no-display");
 });
-async function fetchUrl(url) {
+async function fetchUrl(sort, filter, search) {
+  let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}&search=${search}`;
   try {
     let response = await fetch(url);
     let result = await response.json();
+    console.log("reult", result);
 
     eventsContainer.innerHTML = "";
-
     eventsContainer.innerHTML = result.events;
+
+    if (result.params.sort !== "undefined") {
+      filtersActive.innerHTML = `
+      <button class="active-filter-button">  ${result.params.sort}  <i class="fa-solid fa-xmark fa-lg" onclick="cancelSortActive(event)"></i></button>
+      `;
+    }
+    if (result.params.filter !== "undefined") {
+      sortActive.innerHTML = `
+      <button class="active-filter-button">  ${result.params.filter.split(
+        "|"
+      )} <i class="fa-solid fa-xmark fa-lg" onclick="cancelFilterActive(event)"></i></button>
+      `;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -194,60 +211,53 @@ async function fetchUrl(url) {
 
 let sort;
 let filter;
+let search;
 
 function cancelSortActive(event) {
   sort = undefined;
 
-  let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-  fetchUrl(url);
-
+  fetchUrl(sort, filter, search);
   filtersActive.innerHTML = "";
 }
 
 function cancelFilterActive(event) {
-  // let filterValue = event.target.parentElement.textContent;
-  // let currentUrl = new URL(window.location.href);
-  // let searchParams = currentUrl.searchParams;
-  // if (searchParams.get("filter") === "today|tomorrow") {
-  //   if (filterValue.trim() === "Today") {
-  //     filterValue = "";
-  //     searchParams.set("filter", "tomorrow");
-  //     currentUrl.search = searchParams.toString();
-  //     window.location.href = currentUrl.toString();
-  //   }
-  //   if (filterValue.trim() === "Tomorrow") {
-  //     filterValue = "";
-  //     searchParams.set("filter", "today");
-  //     currentUrl.search = searchParams.toString();
-  //     window.location.href = currentUrl.toString();
-  //   }
-  // } else {
-  //   searchParams.delete("filter");
-  //   currentUrl.search = searchParams.toString();
-  //   window.location.href = currentUrl.toString();
-  // }
+  filter = undefined;
+
+  fetchUrl(sort, filter, search);
+  sortActive.innerHTML = "";
 }
+
+function debounced(cb, delay) {
+  let timeout;
+  return function () {
+    console.log("args");
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      cb();
+    }, delay);
+  };
+}
+
+const updatedDebounceText = debounced(() => {
+  fetchUrl(sort, filter, search);
+}, 1500);
+
+searchInput.addEventListener("input", (event) => {
+  search = event.target.value;
+  updatedDebounceText();
+});
 
 sortPopupButton.addEventListener("click", async () => {
   sortContainer.classList.add("no-display");
   if (sortFee.checked) {
-    // let url = `http://localhost:3000/sort?sort=entry-fee`;
+    sort = "Entry-fee";
 
-    sort = "entry-fee";
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-    console.log("url", url);
-    filtersActive.innerHTML = `
-    <button class="active-filter-button"> Entry fee  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
-    `;
-
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else if (sortDate.checked) {
-    sort = "date";
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-    filtersActive.innerHTML = `
-    <button class="active-filter-button"> Date  <i class="fa-solid fa-xmark" onclick="cancelSortActive(event)"></i></button>
-    `;
-    fetchUrl(url);
+    sort = "Date";
+
+    fetchUrl(sort, filter, search);
   }
 });
 
@@ -255,40 +265,29 @@ filterPopupButton.addEventListener("click", async () => {
   filterContainer.classList.add("no-display");
 
   if (thisWeek.checked) {
-    filter = "this-week";
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-    console.log("this", url);
+    filter = "This-week";
 
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else if (today.checked && tomorrow.checked && thisWeek.checked) {
-    filter = "today|tomorrow|this-week";
+    filter = "Today|Tomorrow|This-week";
 
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else if (today.checked && tomorrow.checked) {
-    filter = "today|tomorrow";
+    filter = "Today|Tomorrow";
 
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else if (today.checked) {
-    filter = "today";
+    filter = "Today";
 
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else if (tomorrow.checked) {
-    filter = "tomorrow";
+    filter = "Tomorrow";
 
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
-
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   } else {
     filter = undefined;
-    let url = `http://localhost:3000/sort?sort=${sort}&filter=${filter}`;
 
-    fetchUrl(url);
+    fetchUrl(sort, filter, search);
   }
 });
 console.count("outside");
