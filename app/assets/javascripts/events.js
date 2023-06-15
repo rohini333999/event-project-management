@@ -6,15 +6,10 @@ const eventDetailsContainer = document.getElementById(
 const signup = document.getElementById("signup");
 const registerButton = document.getElementById("register-button");
 
-async function getRegister() {
-  let url = "http://localhost:3000/api/v1/register";
-  const response = await fetch(url);
-}
-
 signup.addEventListener("click", () => {
   if (signup.textContent === "Logout") {
     document.cookie = "user_id=null;path=/;max-age=0;";
-
+    document.cookie = "role=null;path=/;max-age=0";
     window.location.href = "/";
   } else if (signup.textContent === "Login") {
     window.location.href = "/login";

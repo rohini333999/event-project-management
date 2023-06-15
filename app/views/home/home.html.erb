@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <%= stylesheet_link_tag "home", media: "all", "data-turbo-track" => "reload" %>
+ 
+     <%= stylesheet_link_tag "events", media: "all", "data-turbo-track" => "reload" %>
 </head>
 <body>
 
@@ -17,7 +18,7 @@
         </div>
         <div class="manage-event">
             <a href="addevent" class="signup-text">
-                <%= cookies[:user_id] == "59" ? "Add Event" : ""%>
+                <%= cookies[:role] == "admin" ? "Add Event" : ""%>
             </a>
             
             <a href="myevents" class="signup-text" id="myevents">

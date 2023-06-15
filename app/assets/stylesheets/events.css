@@ -1,0 +1,598 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+* {
+  font-family: "Poppins", sans-serif;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+p,
+button,
+ul {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+input {
+  outline: none;
+}
+.bg-create-account {
+  background-color: white;
+  color: #000000;
+}
+.create-account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-top: 32px;
+}
+
+.input-field {
+  height: 28px;
+  font-size: 16px;
+  border: 2px solid #d6d4d4;
+  border-radius: 5px;
+  padding: 5px;
+  width: 240px;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 34px;
+  width: 300px;
+}
+.submit-button {
+  background-color: #111e4a;
+  color: white;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 90%;
+}
+.error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 75px;
+  font-size: 14px;
+}
+
+.pw-error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 75px;
+  font-size: 14px;
+}
+/* header */
+
+.header-container {
+  box-shadow: 0px 5px 10px #b5b2b2;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  justify-content: space-between;
+  color: #242446;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 370px) {
+  .logo-head {
+    display: none;
+  }
+}
+@media (min-width: 370px) {
+  .logo-head {
+    font-size: 18px;
+    color: #17172d;
+  }
+}
+.signup-text {
+  color: #4a4a82;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.signup-text:hover {
+  color: #242446;
+}
+
+/* event-page */
+.event-card-container {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px #bcbcef;
+  display: flex;
+  flex-direction: column;
+  color: #060683;
+  width: 300px;
+}
+.event-image {
+  height: 200px;
+  width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.events-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 18px;
+}
+.event-text-container {
+  color: #5555a3;
+  background-color: #e8e8f3;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 16px;
+  height: 100%;
+  flex-grow: 1;
+}
+.remove-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.event-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.event-name {
+  color: #111e4a;
+  font-size: 22px;
+}
+.manage-event {
+  display: flex;
+  gap: 5px;
+}
+@media (min-width: 420px) {
+  .manage-event {
+    gap: 15px;
+  }
+}
+.sort-heading {
+  display: flex;
+  justify-content: space-between;
+}
+.all-events-heading {
+  margin: 16px 0px 16px 36px;
+}
+
+/* add event */
+.invalid-error {
+  color: #bd0606;
+  font-size: 20px;
+}
+.event-error-msg {
+  color: #b30303;
+}
+.new-event-container {
+  background-color: #dfdff3;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.event-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #242446;
+}
+@media (min-width: 1024px) {
+  .event-field-container {
+    width: 500px;
+  }
+}
+
+.event-field {
+  font-size: 16px;
+  border: 1px solid #d8d3d3;
+  border-radius: 4px;
+  padding: 8px;
+}
+.event-warning {
+  border: 1px solid #bd0606;
+}
+.time-field-container {
+  display: flex;
+  gap: 16px;
+}
+
+.add-event-container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 16px;
+}
+@media (min-width: 1024px) {
+  .add-event-container {
+    align-items: center;
+  }
+}
+.event-type {
+  margin-right: 22px;
+}
+.size {
+  margin-right: 16px;
+}
+.start-time {
+  margin-right: 52px;
+}
+.end-time {
+  margin-right: 48px;
+}
+.success-msg {
+  color: #008000;
+  font-size: 20px;
+  margin: 0px 15px 0px 15px;
+}
+@media (min-width: 768px) {
+  .success-msg {
+    font-size: 24px;
+  }
+}
+.bg-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+}
+.filter-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px;
+  z-index: 5;
+  width: 250px;
+  border-radius: 8px;
+}
+.sort-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.button {
+  background-color: #4747f1;
+  color: #ffffff;
+  text-align: center;
+  border: none;
+  width: 80px;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 8px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.no-display {
+  display: none;
+}
+.filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+.filters-header-container {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+.search-field {
+  height: 28px;
+  font-size: 16px;
+  border: none;
+
+  padding: 6px;
+  width: 240px;
+}
+.search-icon {
+  border: 1px solid gray;
+  padding: 4px 6px 4px 6px;
+  background-color: #0a0aef;
+  color: white;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+@media (min-width: 420px) {
+  .filters-header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 40px;
+    margin-right: 30px;
+  }
+}
+
+.cancel-mark:hover {
+  cursor: pointer;
+}
+.event-err-msg {
+  color: #ff0000;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.add-event-popup {
+  display: flex;
+  gap: 10px;
+}
+.home-button {
+  margin-top: 16px;
+  align-self: center;
+}
+.add-event-popup-container {
+  display: flex;
+  flex-direction: column;
+}
+.end-date-err {
+  color: #b30303;
+  margin-top: 15px;
+}
+
+/* display-event */
+.page-error {
+  text-align: center;
+}
+.single-event-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.single-event-image-div {
+}
+
+.single-event-image {
+  height: 300px;
+  width: 300px;
+  text-align: center;
+}
+@media (min-width: 1024px) {
+  .single-event-container {
+    /* width: 40vw; */
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+  .single-event-image {
+    height: 400px;
+    width: 400px;
+  }
+}
+.icon-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.each-event p {
+  color: #17172d;
+  font-size: 20px;
+}
+
+.event-details-container {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.each-event {
+  margin: 20px;
+}
+@media (min-width: 768px) {
+  .each-event {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+.each-event .description {
+  color: #4a4a82;
+}
+.each-event .category {
+  color: #4a4a82;
+}
+@media (min-width: 768px) {
+  .register {
+    align-self: flex-start;
+  }
+}
+.after-register {
+  background-color: #008000;
+  color: #ffffff;
+  text-align: center;
+  border: none;
+  width: 80px;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 66px;
+
+  font-size: 14px;
+}
+.time-field-container .error-msg {
+  color: #b30303;
+  position: absolute;
+  margin-top: 45px;
+
+  font-size: 14px;
+}
+/* my-events */
+.myevents-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.myevent-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  box-shadow: 5px 5px 5px #b9b9eb;
+}
+
+.myevent-image {
+  height: 150px;
+  width: 100%;
+}
+.myevent-header {
+  color: #5555a3;
+  background-color: #e8e8f3;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+@media (min-width: 480px) {
+  .myevent-card-container {
+    width: 350px;
+  }
+  .myevent-image {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+@media (min-width: 770px) {
+  .myevent-card-container {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+  }
+  .myevent-image {
+    width: 250px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .myevent-header {
+    width: 100%;
+    border-top-right-radius: 10px;
+  }
+}
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+}
+.yes-button {
+  background-color: #b30303;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  width: 60px;
+  padding: 6px;
+  cursor: pointer;
+}
+.no-button {
+  background-color: #008000;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  width: 60px;
+  padding: 6px;
+  cursor: pointer;
+}
+.remove-button {
+  background-color: #b30303;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.view-btn {
+  color: #0a0aef;
+}
+.active-filter-button {
+  background-color: #111e4a;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 8px;
+}
+.logo-container {
+  cursor: pointer;
+}
+.my-event-heading {
+  margin: 15px 0px 20px 30px;
+}
+@media (min-width: 480px) {
+  .info-text {
+    font-size: 20px;
+  }
+}
+.notfound-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.notfound-image {
+  width: 300px;
+  height: 250px;
+}
+.no-result {
+  margin-top: 30px;
+}

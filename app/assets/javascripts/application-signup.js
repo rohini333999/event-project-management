@@ -109,6 +109,37 @@ function blurConfirmPassword(event) {
   }
 }
 
+function makeRequest(method, url, data) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          resolve(response);
+        } else {
+          reject(xhr.status);
+        }
+      }
+    };
+
+    xhr.send(JSON.stringify(data));
+  });
+}
+
+let mail = "rohini@gmail.com";
+let url = `http://localhost:3000/signup?email=${mail}`;
+
+async function getUser() {
+  const response = await fetch(url);
+  const allUsers = await response.json();
+  console.log(allUsers);
+}
+
+getUser();
 if (accountForm) {
   accountForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -162,39 +193,36 @@ if (accountForm) {
       });
 
       console.log("userslist", usersList);
-      let url = "http://localhost:3000/api/v1/users";
+      let url = `http://localhost:3000/signup?email=${usersList.email}`;
 
       try {
         const response = await fetch(url);
         const allUsers = await response.json();
 
-        const existMail = allUsers.filter((each) => {
-          return each.email === usersList.email;
-        });
+        console.log(response);
 
         if (!response.ok) {
           throw new Error("Error:", response.status);
-        } else if (existMail.length !== 0) {
+        } else if (allUsers.result.length !== 0) {
           successMsg.textContent = "User already exists, Login to continue";
           accountForm.reset();
         } else {
-          const options = {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(usersList),
-          };
-
-          const postResponse = await fetch(url, options);
-          const result = await postResponse.json();
-
-          if (response.ok) {
-            successMsg.textContent = "User registered successfully";
-            accountForm.reset();
-          } else {
-            throw new Error("error:" + response.status);
+          async function postData() {
+            try {
+              let response = await makeRequest(
+                "POST",
+                "http://localhost:3000/api/v1/users",
+                usersList
+              );
+              console.log(response);
+              successMsg.textContent = "User registered successfully";
+              accountForm.reset();
+            } catch (error) {
+              console.log("Error:", error);
+            }
           }
+
+          postData();
         }
       } catch (error) {
         console.log("Error:", error);

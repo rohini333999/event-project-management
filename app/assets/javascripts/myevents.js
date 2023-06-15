@@ -22,9 +22,9 @@ if (!getCookie("user_id")) {
 }
 
 signup.addEventListener("click", () => {
-  console.log("signup", signup.textContent);
   if (signup.textContent === "Logout") {
     document.cookie = "user_id=null;max-age=0;";
+    document.cookie = "role=null;path=/;max-age=0";
 
     window.location.href = "/";
   } else if (signup.textContent === "Login") {

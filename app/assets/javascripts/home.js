@@ -126,7 +126,7 @@ function setCookie(name, value, days) {
 signup.addEventListener("click", () => {
   if (signup.textContent === "Logout") {
     setCookie("user_id", null, null);
-
+    setCookie("role", null, null);
     window.location.href = "/";
   } else if (signup.textContent === "Login") {
     window.location.href = "/login";

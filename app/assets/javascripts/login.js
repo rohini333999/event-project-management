@@ -96,6 +96,7 @@ loginForm.addEventListener("submit", async (event) => {
         console.log("coockie", document.cookie);
 
         setCookie("user_id", validUser.id, 1);
+        setCookie("role", validUser.role, 1);
       } else {
         invalidError.textContent = "Details not found";
 
