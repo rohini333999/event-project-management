@@ -34,9 +34,9 @@ function getCookie(name) {
   return result;
 }
 
-if (!getCookie("user_id")) {
-  window.location.href = "/login";
-}
+// if (!getCookie("user_id")) {
+//   window.location.href = "/login";
+// }
 
 async function clickRegister(event) {
   let checkLogin = getCookie("user_id");

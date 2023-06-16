@@ -3,24 +3,24 @@
       <% if @allEvents.length == 0 %>
           <h3 class="no-result">No results found, Please try with another input</h3>
       <% else %>
-          <% @allEvents.each do |each| %>
+          <% @allEvents.each do |event| %>
         <div class="event-card-container">
             <div>
-            <img src=<%= each.location_url %> class="event-image"/>
+            <img src=<%= event.location_url %> class="event-image"/>
             </div>
           <div class="event-text-container">
            <div class="event-header" id="event-header">
-              <h3 class="event-name"><%= each.event_name %></h3>
-              <p><%= each.location %></p>
-              <p id="event-fee">Entry Fee <i class="fa-solid fa-indian-rupee-sign fa-sm"></i><%= each.entry_fee %></p> 
-              <p>Event Date <%= each.start_date %></p>
+              <h3 class="event-name"><%= event.event_name %></h3>
+              <p><%= event.location %></p>
+              <p id="event-fee">Entry Fee <i class="fa-solid fa-indian-rupee-sign fa-sm"></i><%= event.entry_fee %></p> 
+              <p>Event Date <%= event.start_date %></p>
              
             </div>
               <div class="remove-container">
-              <a href= "events/<%= each.id %>" class="view-btn">View Details</a>
+              <a href= "events/<%= event.id %>" class="view-btn">View Details</a>
+              
                <% if cookies[:role] == "admin" %>
-                
-               <button class="button remove-button" onclick= "removeEvent(event,<%= each.id %>)">Remove</button>
+               <button class="button remove-button" onclick= "removeEvent(event,<%= event.id %>)">Remove</button>
               <% end %>
               </div>
           </div>

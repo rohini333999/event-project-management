@@ -288,6 +288,7 @@ filterPopupButton.addEventListener("click", async () => {
     filter = undefined;
 
     fetchUrl(sort, filter, search);
+    sortActive.innerHTML = "";
   }
 });
 console.count("outside");

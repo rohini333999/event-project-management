@@ -406,8 +406,6 @@ input {
   align-items: center;
   gap: 15px;
 }
-.single-event-image-div {
-}
 
 .single-event-image {
   height: 300px;
@@ -478,8 +476,13 @@ input {
 .error-msg {
   color: #b30303;
   position: absolute;
+  margin-top: 74px;
+  font-size: 14px;
+}
+.event-field-container .error-msg {
+  color: #b30303;
+  position: absolute;
   margin-top: 66px;
-
   font-size: 14px;
 }
 .time-field-container .error-msg {
@@ -605,5 +608,8 @@ input {
   height: 250px;
 }
 .no-result {
-  margin-top: 30px;
+  margin: 30px;
+}
+.anchor-text {
+  font-size: 20px;
 }
