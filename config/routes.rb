@@ -11,15 +11,15 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#home"
-  get "/sort" => "home#sort"
-  get "/sort" => "home#sort"
+  
+ 
   get "signup" => "frontend#signup"
 
   get "login" => "login#login"
   get "addevent" => "addevent#addevent"
   get "/events/:id" => "events#events"
   get "myevents" => "myevents#myevents"
- 
-  get "/notfound" => "notfound#notfound"
-  match "*path", to: "notfound#notfound", via: :all
+  get "/sort" => "home#sort"
+  
+  get '*path', to: 'notfound#notfound'
 end

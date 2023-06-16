@@ -10,6 +10,7 @@ signup.addEventListener("click", () => {
   if (signup.textContent === "Logout") {
     document.cookie = "user_id=null;path=/;max-age=0;";
     document.cookie = "role=null;path=/;max-age=0";
+
     window.location.href = "/";
   } else if (signup.textContent === "Login") {
     window.location.href = "/login";
@@ -31,6 +32,10 @@ function getCookie(name) {
     }
   });
   return result;
+}
+
+if (!getCookie("user_id")) {
+  window.location.href = "/login";
 }
 
 async function clickRegister(event) {

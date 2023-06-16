@@ -16,7 +16,9 @@ function getCookie(name) {
   });
   return result;
 }
+
 console.log("getcookie", getCookie("user_id"));
+
 if (!getCookie("user_id")) {
   window.location.href = "/login";
 }
